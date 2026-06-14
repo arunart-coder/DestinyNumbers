@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insights & Cycles | Destiny Numbers Blog</title>
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mystic: {
+              canvas: '#FDFBF7',     /* Warm, rich parchment cream base */
+              darkCanvas: '#FAF5EC', /* Deeper warm sand for widgets/footer */
+              card: '#FFFFFF',       /* Crisp clean card backgrounds */
+              accent: '#D28551',     /* Cozy Terracotta/Rust Orange accent */
+              accentHover: '#B96E3D',
+              gold: '#C59A4E',       /* Muted gold for decorations and highlights */
+              textPrimary: '#2D221C',/* Charcoal with a touch of warm coffee bean */
+              textSecondary: '#65574F', /* Warm earthy gray for subtext */
+              textMuted: '#96887F',    /* Soft brown woodsmoke */
+              border: '#EFE8DE',      /* Delicate parchment borders */
+              borderDark: '#DCD3C5'   /* Highlighting dividers */
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth View Animations */
+    .view-section {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .view-section.hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    
+    /* Elegant Underline Hover Animation */
+    .hover-underline {
+      position: relative;
+    }
+    .hover-underline::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: #D28551;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    .hover-underline:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    /* Custom Editorial Prose CSS */
+    .prose-editorial p {
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #2D221C;
+    }
+    .prose-editorial h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #2D221C;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .prose-editorial ul {
+      list-style-type: disc;
+      padding-left: 1.75rem;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+    }
+    .prose-editorial ul li {
+      margin-bottom: 0.75rem;
+      line-height: 1.7;
+    }
+    .prose-editorial strong {
+      color: #2D221C;
+      font-weight: 600;
+    }
+    .prose-editorial em {
+      font-style: italic;
+    }
+    
+    /* Quote callouts */
+    .prose-editorial blockquote {
+      border-left: 3px solid #D28551;
+      padding-left: 1.5rem;
+      font-style: italic;
+      color: #65574F;
+      margin: 2rem 0;
+      font-size: 1.15rem;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FDFBF7;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DCD3C5;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C59A4E;
+    }
+
+    /* Progress bar */
+    #progress-bar {
+      transition: width 0.1s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-mystic-canvas font-sans text-mystic-textPrimary min-h-screen flex flex-col antialiased selection:bg-mystic-accent/10 selection:text-mystic-accent">
+
+  <!-- Floating Reading Progress Bar (Only visible on details page) -->
+  <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-mystic-border/50 z-50 hidden">
+    <div id="progress-bar" class="h-full bg-mystic-accent w-0"></div>
+  </div>
+
+  <!-- Header Banner -->
+  <header class="border-b border-mystic-border bg-white sticky top-0 z-40 shadow-sm/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        
+        <!-- Logo Branding Brand -->
+        <a href="#/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-full border border-mystic-accent/30 flex items-center justify-center bg-mystic-darkCanvas text-mystic-accent group-hover:bg-mystic-accent group-hover:text-white transition-all duration-300">
+            <!-- Mystical lotus/star outline path -->
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2a1 1 0 011 1v3.2a6 6 0 014.8 4.8H21a1 1 0 010 2h-3.2A6 6 0 0113 17.8V21a1 1 0 01-2 0v-3.2A6 6 0 016.2 13H3a1 1 0 010-2h3.2A6 6 0 0111 6.2V3a1 1 0 011-1zm0 6a4 4 0 100 8 4 4 0 000-8z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-serif text-2xl tracking-normal font-semibold text-mystic-textPrimary">Destiny Numbers</h1>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-mystic-textMuted -mt-1 font-medium">Cosmic Blueprints & Cycles</p>
+          </div>
+        </a>
+
+        <!-- Middle navigation links (Tiny Buddha style: simple, serene) -->
+        <nav class="flex items-center gap-8 text-sm font-medium tracking-wide">
+          <a href="#/" class="text-mystic-textSecondary hover:text-mystic-accent hover-underline transition-all">Wisdom Library</a>
+          <a href="/tools" class="text-mystic-textSecondary hover:text-mystic-accent hover-underline transition-all">Calculators</a>
+          <a href="/services" class="text-mystic-textSecondary hover:text-mystic-accent hover-underline transition-all">Consultation</a>
+          <a href="/about" class="text-mystic-textSecondary hover:text-mystic-accent hover-underline transition-all">About</a>
+        </nav>
+
+        <!-- Search button or Quick session Link -->
+        <div class="hidden md:block">
+          <a href="/consultation" class="bg-mystic-accent text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide hover:bg-mystic-accentHover transition-colors duration-300 shadow-md shadow-mystic-accent/10 inline-flex items-center gap-2">
+            Book Reading
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mystical Hero/Motto Strip -->
+  <section id="category-hero" class="bg-mystic-darkCanvas border-b border-mystic-border py-12 md:py-16 text-center px-4">
+    <div class="max-w-2xl mx-auto">
+      <span class="text-xs uppercase tracking-[0.3em] font-medium text-mystic-accent block mb-3">Cosmic Wisdom Archive</span>
+      <h2 class="font-serif text-3xl sm:text-4xl text-mystic-textPrimary font-semibold mb-4 leading-tight">Insights & Life Paths</h2>
+      <div class="w-12 h-1 bg-mystic-accent/50 mx-auto rounded-full mb-4"></div>
+      <p class="text-mystic-textSecondary text-sm sm:text-base italic leading-relaxed">
+        "Aligning your individual numbers, spatial geometries, and vibrational matrices with the cosmic order for a tranquil and purposeful existence."
+      </p>
+    </div>
+  </section>
+
+  <!-- Notification Banner Toast -->
+  <div id="toast-message" class="fixed bottom-6 right-6 bg-mystic-textPrimary text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <svg class="w-4 h-4 text-mystic-gold fill-current" viewBox="0 0 20 20">
+      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+    </svg>
+    <span id="toast-text">Link copied to clipboard!</span>
+  </div>
+
+  <!-- VIEW 1: BLOG LANDING PAGE -->
+  <main id="blog-landing" class="view-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 flex-grow width-full">
+    
+    <!-- Controls/Search Area -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 pb-6 border-b border-mystic-border">
+      
+      <!-- Category Selection Filter Pills -->
+      <div class="flex items-center gap-3 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+        <button onclick="setCategory('All')" id="pill-all" class="category-pill active bg-mystic-accent text-white border border-mystic-accent text-xs font-bold px-4 py-2 rounded-full cursor-pointer hover:opacity-90 transition-all whitespace-nowrap">
+          All Wisdom
+        </button>
+        <button onclick="setCategory('Numerology')" id="pill-numerology" class="category-pill bg-white text-mystic-textSecondary border border-mystic-border hover:border-mystic-accent text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all whitespace-nowrap">
+          Numerology
+        </button>
+        <button onclick="setCategory('Vastu')" id="pill-vastu" class="category-pill bg-white text-mystic-textSecondary border border-mystic-border hover:border-mystic-accent text-xs font-bold px-4 py-2 rounded-full cursor-pointer transition-all whitespace-nowrap">
+          Vastu
+        </button>
+      </div>
+
+      <!-- Search Input field -->
+      <div class="relative w-full md:w-80">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-mystic-textMuted">
+          <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input 
+          id="search-input"
+          oninput="handleSearch(this.value)"
+          type="text" 
+          placeholder="Search topics or keywords..." 
+          class="w-full bg-white border border-mystic-border rounded-full py-2.5 pl-11 pr-5 text-sm font-medium outline-none focus:border-mystic-accent focus:ring-1 focus:ring-mystic-accent/30 transition-all placeholder:text-mystic-textMuted"
+        >
+        <button onclick="clearSearch()" id="clear-search-btn" class="absolute right-4 top-1/2 -translate-y-1/2 text-mystic-textMuted hover:text-mystic-accent hidden">
+          <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Editorial Blog Layout Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12 xl:gap-20">
+      
+      <!-- Main Feed block -->
+      <div>
+        
+        <!-- Feature Banner Pick (shown only on All, first post) -->
+        <div id="featured-post-container" class="mb-16">
+          <!-- Dynamically Rendered Featured Post -->
+        </div>
+
+        <h3 class="font-serif text-2xl font-bold border-b border-mystic-border pb-4 mb-8 text-mystic-textPrimary flex items-center gap-2">
+          <span>The Archives</span>
+          <div class="h-1 flex-grow bg-mystic-border/30 rounded"></div>
+        </h3>
+
+        <!-- Standard Grid Feed -->
+        <div id="articles-feed" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+          <!-- Dynamically Rendered Post Cards -->
+        </div>
+
+        <!-- No Results state -->
+        <div id="no-results-state" class="hidden text-center py-20 bg-white rounded-2xl border border-dashed border-mystic-border p-8">
+          <div class="w-16 h-16 rounded-full bg-mystic-darkCanvas text-mystic-accent flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 fill-none stroke-current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <h4 class="font-serif text-xl font-semibold mb-2">No Resonance Found</h4>
+          <p class="text-sm text-mystic-textSecondary max-w-sm mx-auto mb-8">
+            The mathematical frequencies of your search didn't align with any of our stored publications. Try searching for a different keyword or digit.
+          </p>
+          <button onclick="resetFilters()" class="bg-mystic-accent text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-mystic-accentHover transition-colors">
+            Reset Filters
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Left Hand Side Editorial Sidebar -->
+      <aside class="flex flex-col gap-10">
+        
+        <!-- About the Master widget -->
+        <div class="bg-white border border-mystic-border p-6 rounded-2xl shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-mystic-darkCanvas rounded-bl-full z-0 opacity-40"></div>
+          
+          <div class="relative z-10 flex flex-col items-center text-center">
+            <div class="w-20 h-20 rounded-full border border-mystic-accent/35 overflow-hidden p-1 bg-white mb-4">
+              <img src="/arun_poovaiah.png" alt="Dr. Arun Poovaiah" class="w-full h-full object-cover rounded-full" onerror="this.src='https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=150&h=150&fit=crop'">
+            </div>
+            <h4 class="font-serif text-lg font-semibold text-mystic-textPrimary mb-1">Dr. Arun Poovaiah</h4>
+            <span class="text-[10px] text-mystic-accent uppercase tracking-widest font-black mb-3">Master Consultant</span>
+            <p class="text-sm text-mystic-textSecondary leading-relaxed italic mb-4">
+              "We are not merely random collections of cells. We are geometry. We are sound. We are numbers."
+            </p>
+            <p class="text-[11px] text-mystic-textMuted leading-relaxed mb-4">
+              Combining Chaldean mathematics and Vedic astronomy, Dr. Arun has spent the last 15+ years guiding corporate empires and personal lives globally.
+            </p>
+            <a href="/about" class="text-xs font-bold text-mystic-accent hover:text-mystic-accentHover transition-colors flex items-center gap-1.5 hover-underline">
+              Read Entire Biography
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- TinyBuddha Style Newsletter Box -->
+        <div class="bg-mystic-darkCanvas border border-mystic-border/70 p-6 md:p-8 rounded-2xl relative overflow-hidden">
+          <div class="relative z-10">
+            <h4 class="font-serif text-xl font-semibold text-mystic-textPrimary mb-3">Vibrational Wisdom</h4>
+            <p class="text-xs text-mystic-textSecondary leading-relaxed mb-6">
+              Receive one deep esoteric calculation, astro alignment, and life pathway correction in your inbox every Sunday morning. Pure, peaceful insights only.
+            </p>
+            <form onsubmit="handleSubscribe(event)" class="flex flex-col gap-3">
+              <input 
+                id="newsletter-email"
+                type="email" 
+                placeholder="Enter email address" 
+                required 
+                class="bg-white border border-mystic-border rounded-xl px-4 py-3 text-xs font-medium outline-none focus:border-mystic-accent focus:ring-1 focus:ring-mystic-accent/20 transition-all placeholder:text-mystic-textMuted text-mystic-textPrimary"
+              >
+              <button type="submit" class="bg-mystic-textPrimary text-white font-bold text-xs py-3 rounded-xl hover:bg-mystic-accent transition-all duration-300 shadow-md">
+                Subscribe to Weekly Letter
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Quick Wisdom Prompt Cards -->
+        <div class="border border-mystic-border p-6 rounded-2xl bg-white shadow-sm flex flex-col gap-4">
+          <h4 class="font-serif text-md font-semibold text-mystic-textPrimary border-b border-mystic-border pb-3 flex items-center gap-2">
+            <svg class="w-4 h-4 text-mystic-gold fill-current animate-pulse" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+            </svg>
+            <span>Ask & Discover</span>
+          </h4>
+          <p class="text-xs text-mystic-textSecondary leading-relaxed">
+            Curious if your current home layout or mobile sequence is bottlenecking your wealth? Speak with Dr. Arun immediately.
+          </p>
+          <a href="/compatibility" class="text-xs font-bold text-mystic-accent hover:text-mystic-accentHover inline-flex items-center gap-1 hover:translate-x-1 transition-transform">
+            Calculate Partnership compatibility →
+          </a>
+          <a href="/analyser/mobile" class="text-xs font-bold text-mystic-accent hover:text-mystic-accentHover inline-flex items-center gap-1 hover:translate-x-1 transition-transform">
+            Audit your phone number →
+          </a>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+
+  <!-- VIEW 2: INDIVIDUAL ARTICLE DETAIL PAGE -->
+  <main id="blog-article-detail" class="view-section hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 flex-grow w-full">
+    
+    <!-- Navigation Back Link header -->
+    <div class="mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <a href="#/" class="inline-flex items-center gap-2 text-sm font-semibold text-mystic-textSecondary hover:text-mystic-accent hover-underline transition-all group">
+         <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+         </svg>
+         <span>Back to Wisdom Feed</span>
+      </a>
+      
+      <!-- Utility metadata detail info -->
+      <div class="flex items-center gap-3 text-xs text-mystic-textMuted font-medium">
+        <span id="article-read-time">5 min read</span>
+        <span>•</span>
+        <button onclick="shareArticle()" class="inline-flex items-center gap-1.5 bg-mystic-darkCanvas border border-mystic-border/80 px-3 py-1.5 rounded-full hover:bg-mystic-accent hover:text-white hover:border-mystic-accent duration-300">
+          <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"></path>
+            <polyline points="16 6 12 2 8 6"></polyline>
+            <line x1="12" y1="2" x2="12" y2="15"></line>
+          </svg>
+          <span>Share Article</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Article layout container -->
+    <article class="bg-white border border-mystic-border rounded-2xl shadow-sm/5 overflow-hidden p-6 sm:p-12 md:p-16">
+      
+      <!-- Banner image resolver -->
+      <div id="detail-banner-container" class="mb-10 sm:mb-12 aspect-[16/9] bg-mystic-darkCanvas rounded-xl overflow-hidden border border-mystic-border relative shadow-inner">
+        <!-- Dynamically Placed Banner Image -->
+      </div>
+
+      <!-- Categorization & Date banner -->
+      <div class="flex items-center gap-3 text-[11px] font-black text-mystic-accent uppercase tracking-widest mb-4">
+        <span id="detail-category-badge" class="bg-mystic-darkCanvas px-2.5 py-1 rounded">Numerology</span>
+        <span class="text-mystic-border">•</span>
+        <span id="detail-pub-date">May 24, 2026</span>
+      </div>
+
+      <!-- Main Title Display -->
+      <h1 id="detail-title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-mystic-textPrimary leading-[1.15] font-semibold tracking-tight mb-8">
+        Ruled by no1 - Decoding the Power of Driver Number 1 in Numerology
+      </h1>
+
+      <div class="flex items-center gap-4 border-y border-mystic-border/50 py-5 mb-10">
+        <div class="w-11 h-11 rounded-full border border-mystic-accent/30 overflow-hidden bg-mystic-darkCanvas flex-shrink-0">
+          <img id="detail-author-avatar" src="/arun_poovaiah.png" alt="Dr. Arun" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <p id="detail-author-name" class="text-sm font-bold text-mystic-textPrimary">Dr. Arun Poovaiah</p>
+          <p id="detail-author-role" class="text-xs text-mystic-textSecondary">Scientific Numerologist & Founder</p>
+        </div>
+      </div>
+
+      <!-- Rich HTML content editor body styled via class prose-editorial -->
+      <div id="detail-content-html" class="prose-editorial">
+        <!-- Filled Dynamically -->
+      </div>
+
+      <!-- Author Bio footer -->
+      <div class="mt-16 pt-10 border-t border-mystic-border bg-mystic-darkCanvas/40 p-6 sm:p-8 rounded-xl flex flex-col sm:flex-row items-center sm:items-start gap-6">
+        <div class="w-14 h-14 rounded-full border border-mystic-accent/40 overflow-hidden bg-white p-0.5 flex-shrink-0 shadow-sm">
+          <img src="/arun_poovaiah.png" alt="Dr. Arun" class="w-full h-full object-cover rounded-full" onerror="this.src='https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=120&h=120&fit=crop'">
+        </div>
+        <div class="text-center sm:text-left">
+          <h5 class="font-serif text-md font-bold text-mystic-textPrimary mb-1">Written by Dr. Arun Poovaiah</h5>
+          <p class="text-xs text-mystic-textSecondary leading-relaxed mb-4">
+            Master practitioner of Chaldean Numerology, Astrological transit alignments, and Vastu architectics. Through scientific algorithms, he translates cosmic patterns into robust corporate formulas and tranquil personal paths.
+          </p>
+          <a href="/consultation" class="bg-mystic-textPrimary text-white hover:bg-mystic-accent hover:scale-[1.02] transform transition-all text-[11px] font-bold px-4 py-2 rounded-full inline-block shadow-md">
+            Schedule Personal Consultation
+          </a>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Interactive Comments Section -->
+    <div class="mt-16 bg-white border border-mystic-border rounded-2xl p-6 sm:p-12 shadow-sm/5">
+      <h3 class="font-serif text-2xl font-bold text-mystic-textPrimary mb-2 flex items-center gap-2">
+        <svg class="w-6 h-6 text-mystic-accent stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+        </svg>
+        <span>Divine Discussion</span>
+      </h3>
+      <p class="text-xs text-mystic-textSecondary mb-8">
+        Have some insights or experiences aligning with these spiritual vibrations? Share anonymously or with your signature below.
+      </p>
+
+      <!-- Active comment loop lists -->
+      <div id="comments-list" class="space-y-6 mb-12">
+        <!-- Rendered Dynamically -->
+      </div>
+
+      <!-- Add post form -->
+      <div>
+        <h4 class="font-serif text-lg font-semibold text-mystic-textPrimary mb-4">Reflect & Add Comment</h4>
+        <form id="comment-form" onsubmit="handleCommentSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] font-bold text-mystic-textSecondary uppercase tracking-widest mb-1.5">Your Name</label>
+              <input 
+                id="comment-name"
+                type="text" 
+                placeholder="e.g. Elena from London" 
+                required
+                class="w-full bg-mystic-canvas border border-mystic-border rounded-xl px-4 py-3 text-xs outline-none focus:border-mystic-accent focus:bg-white transition-all text-mystic-textPrimary"
+              >
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-mystic-textSecondary uppercase tracking-widest mb-1.5">Email Address (Kept Private)</label>
+              <input 
+                id="comment-email"
+                type="email" 
+                placeholder="e.g. elena@resonance.com" 
+                required
+                class="w-full bg-mystic-canvas border border-mystic-border rounded-xl px-4 py-3 text-xs outline-none focus:border-mystic-accent focus:bg-white transition-all text-mystic-textPrimary"
+              >
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-mystic-textSecondary uppercase tracking-widest mb-1.5">Message / Observation</label>
+            <textarea 
+              id="comment-text"
+              rows="4" 
+              placeholder="What did you feel when you calculated your frequency? What lessons did you experience..."
+              required
+              class="w-full bg-mystic-canvas border border-mystic-border rounded-xl px-4 py-3 text-xs outline-none focus:border-mystic-accent focus:bg-white transition-all text-mystic-textPrimary"
+            ></textarea>
+          </div>
+          <button type="submit" class="bg-mystic-accent hover:bg-mystic-accentHover text-white font-bold text-xs px-6 py-3 rounded-full hover:scale-[1.01] transform transition-all shadow-md">
+            Transmit Comment
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Related Articles Carousel links -->
+    <div class="mt-16">
+      <h3 class="font-serif text-2xl font-bold text-mystic-textPrimary border-b border-mystic-border pb-4 mb-8">
+        Resonating Wisdom
+      </h3>
+      <div id="related-articles-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <!-- Rendered Dynamically -->
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- Mystical Footers banner -->
+  <footer class="bg-mystic-darkCanvas border-t border-mystic-border mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-center">
+      
+      <!-- Logo brand representation -->
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <div class="w-8 h-8 rounded-full border border-mystic-accent/30 flex items-center justify-center bg-white text-mystic-accent">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2a1 1 0 011 1v3.2a6 6 0 014.8 4.8H21a1 1 0 010 2h-3.2A6 6 0 0113 17.8V21a1 1 0 01-2 0v-3.2A6 6 0 016.2 13H3a1 1 0 010-2h3.2A6 6 0 0111 6.2V3a1 1 0 011-1zm0 6a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+        </div>
+        <span class="font-serif text-md font-semibold tracking-wide text-mystic-textPrimary">Destiny Numbers Journal</span>
+      </div>
+
+      <p class="text-xs text-mystic-textSecondary max-w-lg mx-auto mb-8 leading-relaxed italic">
+        A tranquil corner for modern seekers of cosmic wisdom. May you find your resonant frequency in the dance of numbers.
+      </p>
+
+      <div class="w-16 h-px bg-mystic-border-dark mx-auto mb-8"></div>
+
+      <!-- Footer categories links and details -->
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-10 text-xs font-semibold text-mystic-textSecondary">
+        <a href="#/" class="hover:text-mystic-accent transition-colors">Wisdom Home</a>
+        <a href="/tools" class="hover:text-mystic-accent transition-colors">Interactive Calculators</a>
+        <a href="/services" class="hover:text-mystic-accent transition-colors">Consultations</a>
+        <a href="/about" class="hover:text-mystic-accent transition-colors">Meet Dr. Arun</a>
+        <a href="/privacy" class="hover:text-mystic-accent transition-colors">Privacy Policy</a>
+      </div>
+
+      <p class="text-[10px] text-mystic-textMuted tracking-wider">
+        &copy; 2026 Destiny Numbers. Crafted for spiritual alignment. All rights reserved.
+      </p>
+
+    </div>
+  </footer>
+
+
+  <!-- STANDALONE JS DATABASE AND ROUTER CODE -->
+  <script>
+    // 1. Google Drive link converter safely matching user intent
+    function formatImageUrl(url) {
+      if (!url) return '';
+      if (url.includes('drive.google.com')) {
+        const idMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (idMatch && idMatch[1]) {
+          return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
+        }
+      }
+      return url;
+    }
+
+    // 2. High Density Articles Database
+    const ARTICLES = [
+      {
+        slug: "decoding-power-driver-number-1",
+        title: "Ruled by no1 - Decoding the Power of Driver Number 1 in Numerology",
+        category: "Numerology",
+        publishDate: "March 24, 2024",
+        readTime: "6 min read",
+        excerpt: "Have you ever felt like you were born to lead, even when nobody asked you to? Explore the primal vibration of Driver Number 1.",
+        thumbnail: "https://drive.google.com/file/d/1lZgTFx9x1WcXA6h6jJDacNC1871Q8g2R/view?usp=drive_link",
+        thumbnailAlt: "Driver Number 1 Sun leadership visualization",
+        content: `
+          <p>Have you ever felt like you were born to lead, even when nobody asked you to? If you were born on the 1st, 10th, 19th, or 28th of any month, you carry the primal vibration of Driver Number 1. This isn't just a number; it is a sign from the universe that you are here to initiate, to innovate, and to stand tall as the Sun of your own solar system.</p>
+
+          <p>You find yourself naturally taking charge in gatherings, being the one people look to when a decision needs to be made. It's a weight you’ve carried since childhood, isn’t it? That feeling that you cannot settle for the backseat because your very soul craves the horizon.</p>
+
+          <p>Let's decode exactly what the universe wrote in your numbers — and what it means for your life.</p>
+
+          <h3>What Does It Mean to Be Born on 1, 10, 19, or 28? The Moolank 1 Explained</h3>
+          <p>In Vedic Numerology, Driver Number 1 (also known as Moolank 1) is ruled by the Sun (Surya). Just as the Sun is the center of our universe, providing light and life to everything around it, people born under this vibration are the centers of their own worlds. The Sun is the king of the planets, and its influence brings a regal, authoritative, and fiercely independent energy to your personality.</p>
+
+          <p>Think about the Sun for a moment. It doesn't ask for permission to shine; it just does. That is your core essence. You have an innate originality that makes you reject "the way things have always been done." You are the pioneer, the one who hacks through the jungle to build the first road.</p>
+
+          <p>Take the legendary <strong>Ratan Tata</strong>, born on December 28, 1937 (2+8=10, 1+0=1). His life is a masterclass in Driver Number 1 energy. He didn't just manage a company; he transformed an empire with a vision that was both daring and principled. Like a true Number 1, his leadership was never about noise, but about steadfast ambition and integrity.</p>
+
+          <p>I remember <strong>Arjun from Bangalore</strong>, a brilliant software architect who felt stuck in a middle-management role at a top tech firm. He was born on the 19th and had all the "Sun" energy but felt suffocated by bureaucracy. When we analyzed his chart, it was clear he was living against his Number 1 vibration. After he finally made the move to start his own AI venture, his energy shifted almost overnight. He went from being perpetually tired to being the most vibrant person in the room. Why? Because a Number 1 can only thrive when they have the freedom to create and execute their own vision.</p>
+
+          <h3>What Are the Key Personality Traits of Numerology Number 1?</h3>
+          <p>To know a Number 1 is to know someone who values independence above all else. You probably hate being told what to do, especially if the person telling you doesn't have the results to back it up. You are driven by a need for achievement, and the "standard" life often feels too small for you. Your mind is a factory of ideas, and your courage allows you to chase goals that make others nervous.</p>
+
+          <p>This ambition is your greatest strength, but it's fueled by a fierce loyalty to your own standards. You are generous to those who follow you, often playing the role of the protector. However, this same energy can sometimes manifest as a stubbornness that closes doors before you can see what’s behind them.</p>
+
+          <p>The "shadow side" of Driver Number 1 is the ego. Because you are so capable, it is very easy to fall into the trap of thinking you are the only one who can do things correctly. This can lead to isolation or a "my way or the highway" attitude that pushes people away. Understanding these traits isn't about labelling yourself — it's about working WITH your natural energy, not against it.</p>
+
+          <h3>How Does Number 1 Experience Love and Relationships?</h3>
+          <p>In love, a Driver Number 1 is a passionate and protective partner. You don't just love; you invest. You want a partner who can stand beside you as an equal, but you also need someone who respects your need for space and autonomy. In a relationship, you are likely the one driving the major life decisions, and you need a partner who values your leadership.</p>
+
+          <p>Your best matches are often Number 3, 5, and 6. Number 3 brings joy and creativity that softens your edge; Number 5 matches your need for adventure and freedom; and Number 6 provides the nurturing stability that a busy leader needs to recharge. You might find a karmic clash with Number 8, as both numbers carry immense power and can lead to a clash of titans if not balanced.</p>
+
+          <p>I once consulted for <strong>Priya from Mumbai</strong>, a successful fashion entrepreneur born on the 1st. She was in a relationship with another Number 1, and they were constantly at loggerheads over everything from dinner choices to investment strategies. They loved each other deeply, but neither would ever "yield." The relationship was a constant power struggle. When she understood that she needed a partner who complemented her energy rather than mirrored it, she found peace.</p>
+
+          <p>A common relationship mistake Number 1s make is forgetting that a partnership isn't a solo performance. You sometimes take your partner for granted because you're so focused on the goal ahead. Ideal marriage for a Number 1 usually happens in the late 20s or early 30s, once they have established their own identity and "kingdom."</p>
+
+          <p>Want to know if your partner's number is truly compatible with yours? A Destiny Numbers consultation can reveal your complete compatibility blueprint.</p>
+
+          <h3>What Career and Financial Path Suits Numerology Number 1 Best?</h3>
+          <p>Career-wise, you are a natural Entrepreneur. Whether you own a massive business or are a one-person startup, you need to be the boss. You also thrive in Executive Leadership roles, Politics, Creative Direction, or any field that requires a "first-mover" advantage.</p>
+
+          <p>Financially, you have the vibration of abundance. Money tends to find you because you are not afraid to work hard and take calculated risks. However, you can be a "big spender." Because of your regal Sun nature, you love high-quality things and might spend more than necessary on status symbols.</p>
+
+          <p>I think of <strong>Suresh from Pune</strong>, who was a gifted doctor but felt miserable in a corporate hospital setting. He was born on the 10th. His real passion was research and opening a specialized clinic. He worried about the financial risk, but his numbers shouted "Initiate!" Within two years of opening his own practice, his income tripled, but more importantly, he found the professional respect he craved.</p>
+
+          <p>One mistake many Number 1s make is not delegating enough. You think you’ll save money by doing it all yourself, but you actually block your growth. If you're at a career crossroads and want to understand which path your numbers are pointing you toward, book a personal session with Destiny Numbers. The clarity might surprise you.</p>
+
+          <h3>What is the Spiritual Significance of Number 1 in Vedic Numerology?</h3>
+          <p>Your core karmic lesson in this lifetime is to find the balance between Authority and Humility. You are here to learn that true power isn't about dominance; it’s about service. When you use your light to help others find theirs, your own light grows tenfold.</p>
+
+          <p>You naturally carry the gift of Willpower. This is your spiritual superpower. When you decide something, the universe moves to make it happen.</p>
+
+          <h3>Vedic Remedies for Driver Number 1:</h3>
+          <p>Your Lucky Color is any shade of the Sun—Gold, Orange, or Bright Red. Wear these colors on important days to amplify your aura and confidence. Your Lucky Day is Sunday. Set aside time on Sundays to plan your week and reflect on your goals; it’s when your energy is most potent.</p>
+
+          <p>Your Gemstone is the Ruby (Manik). Wear it on the ring finger of your right hand in a gold setting. This stone strengthens the Sun's position in your chart, bringing clarity and vitality. To connect with your ruling energy, recite the Surya Mantra: <em>Om Hraam Hreem Hraum Sah Suryaya Namah</em>. It means "I bow to the Sun, who is the source of all energy."</p>
+
+          <p>A simple daily spiritual practice for you is Arghya — offering water to the rising Sun. Fill a copper vessel with water, hold it with both hands, and slowly pour it out while looking towards the Sun (avoid looking directly at the solar disc). This ancient practice aligns your personal vibration with the cosmic Sun.</p>
+
+          <h3>Which Famous People Share Your Driver Number 1?</h3>
+          <p>You are in legendary company. People who share your vibration include:</p>
+          <ul>
+            <li><strong>Sunil Gavaskar</strong> (Born 10/07/1949): The "Little Master" who pioneered a new era of batting for India.</li>
+            <li><strong>Aishwarya Rai Bachchan</strong> (Born 01/11/1973): A global icon whose poise and independence.</li>
+            <li><strong>Ratan Tata</strong> (Born 28/12/1937): A visionary whose leadership was defined by ethics.</li>
+          </ul>
+
+          <p>You share this number's energy with some truly remarkable souls. The question is — what will YOU do with it?</p>
+
+          <h3>Top Tips to Thrive as a Numerology Number 1 Person</h3>
+          <p>To truly thrive, you must learn to delegate. In your career, hire people who are better than you at the details so you can focus on the big vision. It isn't a sign of weakness; it is a sign of a smart leader.</p>
+
+          <p>In your relationships, remember to listen. Your partner has insights that you might miss in your hurry to reach the finish line. Soften your ego, and you’ll find that your partner becomes your greatest strength rather than your biggest critic.</p>
+
+          <p>Spiritually, practice gratitude. Every time you achieve a goal, take a moment to thank the universe and the people who helped you. This keeps your Sun energy constructive rather than destructive.</p>
+
+          <h3>Conclusion</h3>
+          <p>Being a Driver Number 1 is a magnificent gift, but it comes with the responsibility of being the "light-bearer." You have the fuel to reach any height, provided you don't burn yourself—or others—out in the process. Embrace your ambition, cherish your independent spirit, and never stop looking for the next horizon.</p>
+
+          <p>Your numbers are not your limit — they are your launchpad. To get your complete personal numerology reading and discover what your full chart reveals, connect with Destiny Numbers today. Your destiny is waiting.</p>
+
+          <h3>Frequently Asked Questions About Driver Number 1</h3>
+          <p><strong>Q: How do I know if I am a Driver Number 1?</strong><br/>
+          A: If you were born on the 1st, 10th, 19th, or 28th of any month, your birth date reduces to the single digit of 1.</p>
+          <p><strong>Q: What is the lucky color for number 1?</strong><br/>
+          A: Your best colors are Gold, Orange, and Bright Red.</p>
+        `
+      },
+      {
+        slug: "decoding-power-driver-number-3",
+        title: "Joyful Creator: Decoding the Power of Driver Number 3 in Numerology",
+        category: "Numerology",
+        publishDate: "March 21, 2024",
+        readTime: "7 min read",
+        excerpt: "Have you ever noticed that you are the life of the party, even when you aren’t trying to be? Explore the vibrant, Jupiter-led power of Driver Number 3.",
+        thumbnail: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
+        thumbnailAlt: "Driver Number 3 Joyful Expression",
+        content: `
+          <p>Have you ever noticed that you are the life of the party, even when you aren’t trying to be? If you were born on the 3rd, 12th, 21st, or 30th of any month, you carry the vibrant and expansive energy of Driver Number 3. You are the universe’s way of saying that life is meant to be enjoyed, expressed, and shared.</p>
+
+          <p>You have a natural gift for communication—whether it’s through speaking, writing, or art—that makes people lean in when you open your mouth. It’s an effortless charm, isn’t it? That feeling that you can find a silver lining in even the darkest cloud.</p>
+
+          <p>Let's decode exactly what the universe wrote in your numbers — and what it means for your life.</p>
+
+          <h3>What Does It Mean to Be Born on 3, 12, 21, or 30? The Moolank 3 Explained</h3>
+          <p>In Vedic Numerology, Driver Number 3 (Moolank 3) is ruled by Jupiter (Guru/Brihaspati). Jupiter is the largest planet and the teacher of the gods. Its influence brings a sense of expansion, optimism, and wisdom to your life. You aren't just naturally lucky; you have a mindset that attracts abundance because you believe in the goodness of the world.</p>
+
+          <p>Think about the energy of a teacher. They want to share knowledge, to grow, and to see others thrive. That is your core essence. You are the one who brings the "big picture" to every situation, the one who reminds everyone that there is always more to learn and more to experience.</p>
+
+          <p>Take the stunning <strong>Kareena Kapoor Khan</strong>, born on September 21, 1980 (2+1=3). Her career has been defined by a constant evolution and a fearless sense of self-expression. Like a true Number 3, she carries an aura of joy and confidence that is impossible to ignore.</p>
+
+          <p>I remember <strong>Ravi from Hyderabad</strong>, a lawyer who felt completely burnt out by the dry, adversarial nature of his work. He was born on the 12th. He had this incredible sense of humor and a love for storytelling that was being wasted in legal briefs. When he started a podcast sharing "human stories" from the legal world, his career took a completely different turn. He didn't just become more successful; he became vibrant. A Number 3 must express themselves to feel alive.</p>
+
+          <h3>What Are the Key Personality Traits of Numerology Number 3?</h3>
+          <p>To know a Number 3 is to know someone who values joy and creativity above all else. You are likely the one who organizes the trips, the parties, and the celebrations. You have an optimistic outlook that acts as a magnet for people. Your mind is always bubbling with new projects, and your enthusiasm is infectious.</p>
+          
+          <p>The "shadow side" of Driver Number 3 is scattered energy. Because you see so many possibilities, you often find it hard to finish what you start. You might jump from one project to another, or find yourself over-spending because you want to experience everything right now. Understanding these traits isn't about labelling yourself — it's about working WITH your natural energy, not against it.</p>
+
+          <h3>How Does Number 3 Experience Love and Relationships?</h3>
+          <p>In love, a Driver Number 3 is a bundle of fun and affection. You need a partner who can laugh with you and who doesn't try to dampen your spirits. You are a communicative partner who needs to talk things through, and you thrive when you feel your creativity is being supported.</p>
+
+          <p>Your best matches are often Number 1, 2, and 9. Number 1 matches your ambition; Number 2 provides the emotional depth that balances your joy; and Number 9 shares your broad, humanitarian view of the world. You might find a clash with Number 6, as their focus on domestic responsibility can sometimes feel restrictive to your expansive nature.</p>
+
+          <p>I recall <strong>Pooja and Amit from Mumbai</strong>. Pooja, a Number 3, was always dreaming of new adventures, while Amit was more focused on building a "perfect" home. They struggled until Amit realized that Pooja’s dreams were what kept their marriage from becoming stagnant. Once he started joining her on her "wild" ideas, their bond became unbreakable.</p>
+
+          <p>A common relationship mistake Number 3s make is lack of follow-through. You make big promises in the heat of a romantic moment but sometimes forget the daily effort required to keep a relationship healthy. Ideal marriage for a Number 3 often happens in the late 20s, once they have had a chance to explore a bit of the world.</p>
+        `
+      },
+      {
+        slug: "secret-vibration-mobile-number",
+        title: "The Secret Vibration of Your Mobile Number",
+        category: "Numerology",
+        publishDate: "March 15, 2024",
+        readTime: "5 min read",
+        excerpt: "Your mobile number carries a hidden vibration that influences your communication, relationships, career growth, and peace.",
+        thumbnail: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=1200",
+        thumbnailAlt: "Digital energy signature visualization",
+        content: `
+          <p>Your mobile number is not just a random set of digits — it carries a hidden vibration that influences your communication, relationships, career growth, and even your mental peace. In numerology, every number emits a specific frequency. Since your phone is something you use daily, its number constantly interacts with your personal energy.</p>
+          
+          <h3>How to Calculate Your Mobile Number Vibration</h3>
+          <p>Add all the digits of your mobile number together until you get a single digit (1 to 9). This single digit is your Mobile Number’s vibration.</p>
+          
+          <p><strong>Example:</strong><br/>
+          9876543210 → 9+8+7+6+5+4+3+2+1+0 = 45 → 4+5 = 9</p>
+          
+          <h3>What Each Number Means</h3>
+          <ul>
+            <li><strong>1:</strong> Brings leadership, confidence, and recognition. Good for business and career growth.</li>
+            <li><strong>2:</strong> Enhances relationships, diplomacy, and emotional balance. Ideal for those in partnerships or client-facing roles.</li>
+            <li><strong>3:</strong> Attracts creativity, networking, and social success. Excellent for influencers and creative professionals.</li>
+            <li><strong>4:</strong> Gives stability and discipline but can create delays or stress if not balanced.</li>
+            <li><strong>5:</strong> Brings fast changes, travel, and dynamic energy. Good for sales and business but can cause instability.</li>
+            <li><strong>6:</strong> Supports love, family, and harmony. Very good for married people and those in the beauty or hospitality industry.</li>
+            <li><strong>7:</strong> Deepens intuition and spirituality but may create loneliness or overthinking.</li>
+            <li><strong>8:</strong> Powerful for money and authority, but can bring struggle and heavy responsibilities.</li>
+            <li><strong>9:</strong> Highly energetic and transformative. Good for fame and humanitarian work but can cause aggression or sudden endings.</li>
+          </ul>
+          
+          <h3>Quick Tips for a Lucky Mobile Number</h3>
+          <ul>
+            <li>Avoid numbers that add up to 4, 8, or 7 if you want smooth progress and peace.</li>
+            <li>Prefer numbers that add up to 1, 3, 5, or 6 for overall growth and harmony.</li>
+            <li>If your current number is not favorable, you can balance it by using a secondary number (like a work SIM) with a better vibration.</li>
+          </ul>
+          
+          <p>Your mobile number silently shapes your daily experiences. Choosing the right vibration can make communication smoother and opportunities flow more easily.</p>
+          
+          <p><strong>Would you like to know the best mobile number for your birth date?</strong></p>
+        `
+      },
+      {
+        slug: "numerology-business-growth",
+        title: "Numerology for Exponential Business Growth",
+        category: "Numerology",
+        publishDate: "March 10, 2024",
+        readTime: "7 min read",
+        excerpt: "Case study analysis: How brand names like Apple and Tesla utilize numerical frequencies to maintain market dominance and connect deeply.",
+        thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+        thumbnailAlt: "Chart showing growth patterns",
+        content: `
+          <p>Success in business is often attributed to strategy and execution, but beneath the surface, successful brands often resonate with powerful numerical frequencies.</p>
+          
+          <h3>The Power of the Business Name</h3>
+          <p>Your business name creates the first energetic contact with your clients. Using the Chaldean chart, we can audit a brand's name to ensure it aligns with its intended industry. For instance, a financial institution should ideally vibrate at a frequency of 4 or 8 for stability and wealth, whereas a creative agency might thrive on a 3 or 5 vibration.</p>
+        `
+      },
+      {
+        slug: "science-vastu-modern-homes",
+        title: "The Science of Vastu for Modern Homes",
+        category: "Vastu",
+        publishDate: "March 5, 2024",
+        readTime: "6 min read",
+        excerpt: "Beyond myths: How spatial geometry, elemental balances, and elementary alignments affect your neurochemistry, well-being, and productivity.",
+        thumbnail: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=1200",
+        thumbnailAlt: "Modern minimalist house interior",
+        content: `
+          <p>Vastu Shastra is often misunderstood as a set of rules about where to place doors. In reality, it is an ancient science of architecture and environmental harmony.</p>
+          
+          <h3>Architecture and Psychology</h3>
+          <p>Modern studies in environmental psychology are beginning to confirm what Vastu has claimed for millennia: the layout of our living spaces profoundly impacts our neurochemistry.</p>
+        `
+      },
+      {
+        slug: "decoding-power-driver-number-2",
+        title: "The Intuitive Diplomat: Decoding the Power of Driver Number 2 in Numerology",
+        category: "Numerology",
+        publishDate: "March 2, 2024",
+        readTime: "6 min read",
+        excerpt: "Deeply intuitive, reflective, and peace-loving? Explore the Moon-led vibration of Driver Number 2 and its profound influence on empathy.",
+        thumbnail: "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&q=80&w=1200",
+        thumbnailAlt: "Driver Number 2 Moon-led visual",
+        content: `
+          <p>Have you ever felt deeply affected by the emotions of people around you? If you were born on the 2nd, 11th, 20th, or 29th of any month, you carry the gentle, magnetic vibration of Driver Number 2. This represents the ultimate power of collaboration, intuition, and diplomacy.</p>
+
+          <h3>What Does It Mean to Be Born on 2, 11, 20, or 29? The Moolank 2 Explained</h3>
+          <p>In Vedic Numerology, Driver Number 2 is ruled by the Moon (Chandra). The Moon governs reflection, emotions, and sub-conscious insights. Just as the Moon is cool, calm, and vitalizes the night, people born under this vibration bring harmony, balance, and deep empathy to the world around them.</p>
+
+          <h3>The Personality of the Intuitive Diplomat</h3>
+          <p>You are naturally peace-loving, creative, and exceptionally intuitive. You have the unique gift of reading behind the spoken word, sensing true motivations. This makes you an incredible mediator, counsellor, and companion.</p>
+          
+          <p>The shadow side is a tendency towards emotional fluctuations and sensitiveness. Since the Moon goes through phases, you may occasionally struggle with mood swings or self-doubt. Developing strong emotional boundaries is key to your growth.</p>
+        `
+      }
+    ];
+
+    // Default comments for the pre-seeded articles to make the experience 100% immersive
+    const DEFAULT_COMMENTS = {
+      "decoding-power-driver-number-1": [
+        { name: "Arjun S.", date: "March 25, 2024", text: "This article is literally speaking to my soul. I was also born on the 19th and started my own company 6 months ago. I was terrified of leaving my stable job but the freedom has restored my energy. Absolute magic." },
+        { name: "Priya Menon", date: "April 2, 2024", text: "Dr. Arun, your advice on delegation was a game changer for me. I was micromanging my design studio to exhaustion. Learning that my Sun energy is built to guide rather than do everything saved my health." }
+      ],
+      "decoding-power-driver-number-3": [
+        { name: "Rohini K", date: "March 22, 2024", text: "Born on the 12th here. I always thought my interest in so many varied things was a flaw, but learning about Jupiter's energy of expansion helped me understand my nature better. Doing the storytelling now!" }
+      ]
+    };
+
+    // 3. Routing & State management
+    let currentCategory = 'All';
+    let currentSearchQuery = '';
+
+    // Standard DOM bindings
+    const landingSection = document.getElementById('blog-landing');
+    const detailSection = document.getElementById('blog-article-detail');
+    const featuredContainer = document.getElementById('featured-post-container');
+    const articlesFeed = document.getElementById('articles-feed');
+    const noResultsState = document.getElementById('no-results-state');
+    const categoryHeroSection = document.getElementById('category-hero');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+
+    // On State Update: Redraw everything
+    function render() {
+      // 1. Filter articles
+      const filtered = ARTICLES.filter(art => {
+        const matchesCategory = currentCategory === 'All' || art.category === currentCategory;
+        const matchesSearch = !currentSearchQuery || 
+          art.title.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+          art.excerpt.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+          art.category.toLowerCase().includes(currentSearchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      // Show/hide no results state
+      if (filtered.length === 0) {
+        featuredContainer.innerHTML = '';
+        articlesFeed.innerHTML = '';
+        noResultsState.classList.remove('hidden');
+        return;
+      } else {
+        noResultsState.classList.add('hidden');
+      }
+
+      // Render category pills active state
+      document.querySelectorAll('.category-pill').forEach(btn => {
+        btn.classList.remove('bg-mystic-accent', 'text-white', 'border-mystic-accent');
+        btn.classList.add('bg-white', 'text-mystic-textSecondary', 'border-mystic-border');
+      });
+      const activePill = document.getElementById(`pill-${currentCategory.toLowerCase()}`);
+      if (activePill) {
+        activePill.classList.remove('bg-white', 'text-mystic-textSecondary', 'border-mystic-border');
+        activePill.classList.add('bg-mystic-accent', 'text-white', 'border-mystic-accent');
+      }
+
+      // Handle Featured Post (Only show on 'All' category and when search query is empty)
+      if (currentCategory === 'All' && !currentSearchQuery) {
+        const featured = filtered[0];
+        const tail = filtered.slice(1);
+
+        featuredContainer.innerHTML = `
+          <div class="group relative bg-white border border-mystic-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+            <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] md:items-stretch">
+              
+              <!-- Left: Image frame -->
+              <a href="#/article/${featured.slug}" class="block aspect-[16/10] lg:aspect-auto overflow-hidden bg-mystic-darkCanvas relative">
+                <img 
+                  src="${formatImageUrl(featured.thumbnail)}" 
+                  alt="${featured.thumbnailAlt || featured.title}" 
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerpolicy="no-referrer"
+                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800&q=80';"
+                >
+                <div class="absolute top-4 left-4 bg-mystic-accent text-white font-black text-[9px] uppercase tracking-widest px-2.5 py-1 rounded">
+                  Featured Article
+                </div>
+              </a>
+
+              <!-- Right: Content details -->
+              <div class="p-8 sm:p-10 lg:p-12 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 text-[10px] font-bold text-mystic-accent uppercase tracking-widest mb-3">
+                    <span>${featured.category}</span>
+                    <span class="text-mystic-border">•</span>
+                    <span class="text-mystic-textMuted">${featured.publishDate}</span>
+                  </div>
+                  <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-mystic-textPrimary leading-tight font-semibold mb-4 group-hover:text-mystic-accent transition-colors">
+                    <a href="#/article/${featured.slug}">${featured.title}</a>
+                  </h2>
+                  <p class="text-mystic-textSecondary text-sm leading-relaxed mb-6 italic line-clamp-3">
+                    ${featured.excerpt}
+                  </p>
+                </div>
+
+                <div class="flex items-center justify-between border-t border-mystic-border/50 pt-5">
+                  <span class="text-xs text-mystic-textMuted font-medium">${featured.readTime}</span>
+                  <a href="#/article/${featured.slug}" class="inline-flex items-center gap-2 text-xs font-bold text-mystic-accent hover:text-mystic-accentHover hover-underline transition-all group/link">
+                    <span>Read Full Article</span>
+                    <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        `;
+        featuredContainer.classList.remove('hidden');
+
+        // Render remaining in feed grid
+        renderFeed(tail);
+      } else {
+        // No featured post banner (hide it)
+        featuredContainer.innerHTML = '';
+        featuredContainer.classList.add('hidden');
+
+        // Render everything in grid
+        renderFeed(filtered);
+      }
+    }
+
+    // Render list cards
+    function renderFeed(list) {
+      articlesFeed.innerHTML = list.map(art => `
+        <article class="group bg-white border border-mystic-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <!-- Thumbnail preview -->
+            <a href="#/article/${art.slug}" class="block aspect-[16/10] rounded-xl overflow-hidden bg-mystic-darkCanvas mb-5 relative">
+              <img 
+                src="${formatImageUrl(art.thumbnail)}" 
+                alt="${art.thumbnailAlt || art.title}" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                referrerpolicy="no-referrer"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&q=80';"
+              >
+            </a>
+            
+            <!-- Metadata line -->
+            <div class="flex items-center gap-2 text-[10px] font-bold text-mystic-accent uppercase tracking-widest mb-3.5">
+              <span>${art.category}</span>
+              <span class="text-mystic-border">•</span>
+              <span class="text-mystic-textMuted">${art.publishDate}</span>
+            </div>
+
+            <!-- Title link -->
+            <h3 class="font-serif text-xl font-semibold text-mystic-textPrimary leading-snug mb-3 hover:text-mystic-accent transition-colors duration-200">
+              <a href="#/article/${art.slug}">${art.title}</a>
+            </h3>
+
+            <!-- Short Excerpt text -->
+            <p class="text-xs sm:text-sm text-mystic-textSecondary leading-relaxed mb-6 line-clamp-3">
+              ${art.excerpt}
+            </p>
+          </div>
+
+          <!-- Bottom bar footer -->
+          <div class="flex items-center justify-between border-t border-mystic-border/50 pt-4 mt-auto">
+            <span class="text-[11px] text-mystic-textMuted font-medium">${art.readTime}</span>
+            <a href="#/article/${art.slug}" class="inline-flex items-center gap-1 text-[11px] font-bold text-mystic-accent hover:text-mystic-accentHover hover-underline transition-all group/lnk">
+              <span>Read More</span>
+              <svg class="w-3.5 h-3.5 transition-transform group-lnk:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // 4. Action handlers
+    function setCategory(cat) {
+      currentCategory = cat;
+      render();
+    }
+
+    function handleSearch(val) {
+      currentSearchQuery = val;
+      if (val) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+      render();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      currentSearchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      render();
+    }
+
+    function resetFilters() {
+      currentCategory = 'All';
+      clearSearch();
+    }
+
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const emailField = document.getElementById('newsletter-email');
+      const email = emailField.value;
+      if (email) {
+        showToast(`Wisdom Alignment Granted! Welcome aboard, ${email}!`);
+        emailField.value = '';
+      }
+    }
+
+    // Show custom toast message
+    function showToast(message) {
+      const toast = document.getElementById('toast-message');
+      const toastText = document.getElementById('toast-text');
+      toastText.innerText = message;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 4000);
+    }
+
+    function shareArticle() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast("Vibrational match ready! Article link copied to clipboard.");
+    }
+
+    // 5. Hash Router Engine
+    function resolveRoute() {
+      const hash = window.location.hash || '#/';
+      
+      if (hash.startsWith('#/article/')) {
+        // Individual Article Page View
+        const slug = hash.replace('#/article/', '');
+        const article = ARTICLES.find(a => a.slug === slug);
+        
+        if (article) {
+          showArticlePage(article);
+        } else {
+          // Fall back to landing
+          window.location.hash = '#/';
+        }
+      } else {
+        // Landing Feed View
+        showLandingPage();
+      }
+    }
+
+    // Toggle Landing Page
+    function showLandingPage() {
+      progressContainer.classList.add('hidden');
+      detailSection.classList.add('hidden');
+      landingSection.classList.remove('hidden');
+      categoryHeroSection.classList.remove('hidden');
+      render();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Toggle Details Page
+    function showArticlePage(article) {
+      categoryHeroSection.classList.add('hidden');
+      landingSection.classList.add('hidden');
+      detailSection.classList.remove('hidden');
+      progressContainer.classList.remove('hidden');
+
+      // Populate Article
+      document.getElementById('detail-banner-container').innerHTML = `
+        <img 
+          src="${formatImageUrl(article.thumbnail)}" 
+          alt="${article.thumbnailAlt || article.title}" 
+          class="w-full h-full object-cover"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=1200&q=80';"
+        >
+      `;
+
+      document.getElementById('detail-category-badge').innerText = article.category;
+      document.getElementById('detail-pub-date').innerText = article.publishDate;
+      document.getElementById('detail-title').innerText = article.title;
+      document.getElementById('article-read-time').innerText = article.readTime;
+      document.getElementById('detail-content-html').innerHTML = article.content;
+      
+      // Title SEO updates
+      document.title = `${article.title} | Destiny Numbers Insights`;
+
+      // Set up interactive comments context
+      loadAndRenderComments(article.slug);
+
+      // Render Related Articles
+      renderRelatedArticles(article);
+
+      // Scroll to Top immediately
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Clean comment form fields
+      document.getElementById('comment-form').reset();
+    }
+
+    // Save and Render Comments locally
+    function loadAndRenderComments(slug) {
+      const customComments = JSON.parse(localStorage.getItem(`comment-${slug}`)) || [];
+      const defaultData = DEFAULT_COMMENTS[slug] || [];
+      const totalComments = [...defaultData, ...customComments];
+
+      const wrapper = document.getElementById('comments-list');
+      if (totalComments.length === 0) {
+        wrapper.innerHTML = `
+          <p class="text-xs text-mystic-textMuted italic text-center py-6 border-b border-mystic-border/50">
+            No energy pathways mapped below yet. Be the first to chime in!
+          </p>
+        `;
+        return;
+      }
+
+      wrapper.innerHTML = totalComments.map(c => `
+        <div class="flex items-start gap-4 p-5 rounded-xl bg-mystic-darkCanvas/40 border border-mystic-border/50 text-left transition-all hover:bg-mystic-darkCanvas/60 duration-200">
+          <div class="w-9 h-9 rounded-full bg-mystic-accent/10 border border-mystic-accent/30 text-mystic-accent flex items-center justify-center font-serif font-black text-xs uppercase flex-shrink-0">
+            ${c.name.charAt(0)}
+          </div>
+          <div>
+            <div class="flex items-baseline gap-2 mb-1">
+              <span class="text-xs font-bold text-mystic-textPrimary">${c.name}</span>
+              <span class="text-[9px] text-mystic-textMuted">${c.date}</span>
+            </div>
+            <p class="text-xs leading-relaxed text-mystic-textSecondary">
+              ${c.text}
+            </p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleCommentSubmit(e) {
+      e.preventDefault();
+      const hash = window.location.hash;
+      const slug = hash.replace('#/article/', '');
+      
+      const name = document.getElementById('comment-name').value;
+      const email = document.getElementById('comment-email').value;
+      const text = document.getElementById('comment-text').value;
+
+      const dateStr = new Date().toLocaleDateString(undefined, { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+
+      const newComment = { name, email, text, date: dateStr };
+
+      const existing = JSON.parse(localStorage.getItem(`comment-${slug}`)) || [];
+      existing.push(newComment);
+      localStorage.setItem(`comment-${slug}`, JSON.stringify(existing));
+
+      // Refresh comment lists
+      loadAndRenderComments(slug);
+
+      // Clean text block
+      document.getElementById('comment-text').value = '';
+      
+      showToast("Cosmic feedback transmitted successfully!");
+    }
+
+    // Render other recommended articles
+    function renderRelatedArticles(currentArt) {
+      const grid = document.getElementById('related-articles-grid');
+      // Find matching category or just any 2 articles excluding current one
+      const candidates = ARTICLES.filter(a => a.slug !== currentArt.slug);
+      let selected = candidates.filter(a => a.category === currentArt.category).slice(0, 2);
+      if (selected.length < 2) {
+        selected = candidates.slice(0, 2);
+      }
+
+      grid.innerHTML = selected.map(art => `
+        <a href="#/article/${art.slug}" class="group block bg-mystic-darkCanvas/30 border border-mystic-border/50 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all duration-300">
+          <div class="aspect-[16/10] rounded-lg overflow-hidden mb-4 bg-mystic-darkCanvas">
+            <img 
+              src="${formatImageUrl(art.thumbnail)}" 
+              alt="${art.title}" 
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+              referrerpolicy="no-referrer"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=400&q=80';"
+            >
+          </div>
+          <span class="text-[9px] font-bold text-mystic-accent uppercase tracking-widest block mb-1">${art.category}</span>
+          <h4 class="font-serif text-[15px] font-semibold text-mystic-textPrimary leading-snug group-hover:text-mystic-accent duration-200 line-clamp-1">
+            ${art.title}
+          </h4>
+        </a>
+      `).join('');
+    }
+
+    // 6. Scroll reading progress monitor
+    window.addEventListener('scroll', () => {
+      const hash = window.location.hash || '';
+      if (!hash.startsWith('#/article/')) return;
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight <= 0) return;
+
+      const progress = (window.pageYOffset / totalHeight) * 100;
+      progressBar.style.width = `${progress}%`;
+    });
+
+    // 7. Initial loading triggers
+    window.addEventListener('hashchange', resolveRoute);
+    window.addEventListener('DOMContentLoaded', resolveRoute);
+    
+    // Core routing trigger - executes instantly on script load to ensure
+    // accurate view matching even if DOMContentLoaded has already fired.
+    resolveRoute();
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      // Direct lookup for admin role OR bootstrap admin email
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'destinynumbers99@gmail.com'
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Validation Helpers ---
+
+    function isValidAdmin(data) {
+      return data.email is string && data.email == 'destinynumbers99@gmail.com';
+    }
+
+    function isValidBlogPost(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() <= 500 &&
+             data.slug is string && data.slug.matches('^[a-z0-9-]+$') &&
+             data.content is string && data.content.size() <= 500000 &&
+             data.status in ['draft', 'published', 'scheduled', 'pending'] &&
+             data.visibility in ['public', 'private'] &&
+             data.author is map &&
+             data.author.name is string &&
+             data.createdAt is string &&
+             data.updatedAt is string;
+    }
+
+    function isValidComment(data) {
+      return data.articleSlug is string &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.email is string && data.email.size() <= 200 &&
+             data.content is string && data.content.size() > 0 && data.content.size() <= 5000 &&
+             data.status in ['pending', 'approved', 'spam'] &&
+             data.date is string;
+    }
+
+    function isValidCMSData(data) {
+      return data.siteTagline is string &&
+             data.navLinks is list &&
+             data.services is list &&
+             data.testimonials is list &&
+             data.pricing is list;
+    }
+
+    // --- Rules ---
+
+    // Admins collection - allow bootstrap for primary user
+    match /admins/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && (request.auth.token.email == 'destinynumbers99@gmail.com' && request.auth.uid == userId);
+      allow update, delete: if isAdmin();
+    }
+
+    // CMS data
+    match /cms/data {
+      allow read: if true;
+      allow write: if isAdmin() && isValidCMSData(incoming());
+    }
+
+    // Blog posts
+    match /posts/{postId} {
+      allow get: if (existing().status == 'published' && existing().visibility == 'public') || isAdmin();
+      allow list: if (resource.data.status == 'published' && resource.data.visibility == 'public') || isAdmin();
+      
+      allow create: if isAdmin() && isValidBlogPost(incoming());
+      allow update: if (
+        (
+          existing().status == 'published' &&
+          existing().visibility == 'public' &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['views']) &&
+          (incoming().views is int || incoming().views is number) &&
+          (
+            (!('views' in existing()) && incoming().views >= 1) ||
+            (('views' in existing()) && incoming().views >= existing().views)
+          )
+        ) || (
+          isAdmin() && isValidBlogPost(incoming())
+        )
+      );
+      allow delete: if isAdmin();
+    }
+
+    // Categories
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Media
+    match /media/{mediaId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Comments
+    match /comments/{commentId} {
+      allow get: if existing().status == 'approved' || isAdmin();
+      allow list: if resource.data.status == 'approved' || isAdmin();
+      
+      // Anyone can post a comment (it starts as pending)
+      allow create: if isValidComment(incoming()) && incoming().status == 'pending';
+      
+      // Only admins can approve or delete comments
+      allow update: if isAdmin() && isValidComment(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Settings
+    match /settings/blog {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

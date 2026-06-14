@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Testimonials Slider | Dr. Arun Poovaiah</title>
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Simple & powerful Tailwind CSS CDN for fluid responsive properties -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              accent: '#C8913A',      /* Warm Gold */
+              accentHover: '#A8761F', /* Hover Gold */
+              navy: '#1C3557',        /* Mystic Navy */
+              textPrimary: '#2C2C2C', /* Deep Slate/Charcoal */
+              textSecondary: '#5A5A5A', /* Muted Gray */
+              bg: '#FAFAF8',          /* Off-white */
+              border: '#E8E2D8'       /* Subtle Gold Border */
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Source Sans Pro', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Continuous animations and sliding transition effects */
+    .testimonial-container {
+      perspective: 1000px;
+    }
+    
+    .testimonial-slide {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      width: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+    
+    .testimonial-slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      position: relative;
+      pointer-events: auto;
+      z-index: 20;
+    }
+
+    /* Elegant brand focus styles */
+    .button-ripple {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .button-ripple:hover {
+      box-shadow: 0 4px 15px rgba(200, 145, 58, 0.3);
+    }
+
+    /* Custom scrollbar for raw accessibility checks */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAFAF8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C8913A;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-brand-bg font-body text-brand-textPrimary min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-10">
+
+  <!-- Main Section Wrapper -->
+  <section class="w-full max-w-4xl bg-white rounded-2xl border border-brand-border/40 shadow-xl overflow-hidden py-12 md:py-16 px-6 sm:px-12 md:px-16 mx-auto relative">
+    
+    <!-- Large Decorative Quote Icon at Top Center -->
+    <div class="flex justify-center mb-6">
+      <svg class="w-16 h-16 sm:w-20 sm:h-20 text-brand-accent/20 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.017 21v-7.391c0-4.854 2.82-7.79 7.397-8.609l.983 1.761c-2.409.796-3.584 2.181-3.524 4.152H22v10.087h-7.983zm-12 0v-7.391c0-4.854 2.82-7.79 7.397-8.609l.983 1.761c-2.409.796-3.584 2.181-3.524 4.152H10v10.087H2.017z" />
+      </svg>
+    </div>
+
+    <!-- Section Heading -->
+    <div class="text-center mb-10 max-w-xl mx-auto">
+      <h2 class="font-heading text-3xl sm:text-4xl text-brand-navy tracking-tight font-normal">
+        Stories of Resonance
+      </h2>
+      <div class="w-16 h-0.5 bg-brand-accent mx-auto mt-4"></div>
+      <p class="text-brand-textSecondary text-sm sm:text-base mt-3">
+        Discover how alignment of destiny numbers, names, and energy vibrations paths the way to deep fulfillment.
+      </p>
+    </div>
+
+    <!-- Testimonial Slider Frame Slider View -->
+    <div class="relative max-w-3xl mx-auto testimonial-container min-h-[360px] sm:min-h-[280px] md:min-h-[220px]">
+      <div id="slides-wrapper">
+        <!-- Rendered Dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- Interactive Navigation Arrows & Dot Pagination Indicators -->
+    <div class="flex flex-col sm:flex-row items-center justify-between border-t border-brand-border/30 mt-12 pt-6 gap-6">
+      
+      <!-- Dots Indicators representing current slide -->
+      <div class="flex items-center space-x-2 order-2 sm:order-1" id="pagination-wrapper" role="tablist">
+        <!-- Dots rendered Dynamically via JS -->
+      </div>
+
+      <!-- Arrow Navigation Buttons -->
+      <div class="flex items-center space-x-4 order-1 sm:order-2" role="group" aria-label="Slider navigation">
+        <button id="prev-btn" class="button-ripple bg-brand-bg hover:bg-brand-accent/10 border border-brand-border text-brand-navy rounded-full w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-brand-accent" aria-label="Previous Testimonial">
+          <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button id="next-btn" class="button-ripple bg-brand-bg hover:bg-brand-accent/10 border border-brand-border text-brand-navy rounded-full w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-brand-accent" aria-label="Next Testimonial">
+          <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      
+    </div>
+
+  </section>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Testimonials Data Array
+    const testimonials = [
+      {
+        name: "Priyanka Prasaath",
+        role: "Psychologist",
+        quote: "I'd like to swear by his work , his astrological predictions are on point and without thinking twice I'd turn towards him for advice at any point in my life when the need be . He not only tells you things you want to hear but also things we have to work on to better ourselves . It's been wonderful so far , thank you 🙏.",
+        image: "https://lh3.googleusercontent.com/d/1a2fidCSDP-jV0LpI-GkWfHUQkolV6LDt"
+      },
+      {
+        name: "Linda Ibañez",
+        role: "Chile-Argentina",
+        quote: "Recomiendo en un 100%. La experiencia promete ser muy mística, pero no solo eso, descubres que dentro de tu vida hay situaciones que son muy marcadas por los designios con los que Dios te mandó y parte de eso es tu fecha de nacimiento lo cual es con los números que Dios decidió. Propongo descubran ustedes mísmos y se sorprenderán 🙂",
+        image: "https://lh3.googleusercontent.com/d/1AZkUG4DJP-jMMe030aaaCTGIrjj-vGIZ"
+      },
+      {
+        name: "Nidhi Shetty",
+        role: "Educationist",
+        quote: "Extremely knowledgeable! He has an explanation for everything. At times when I feel stuck Mr. Poovaiah is my goto person to contact for some clarity and solutions. His remedies work like magic.",
+        image: "https://lh3.googleusercontent.com/d/1nFq_hPmoknps0hid4h6H6HMlLzggkkFd"
+      },
+      {
+        name: "Deepa S",
+        role: "Engineer",
+        quote: "My son's numerology number was given by him. I am satisfied with his calculation and prediction. and Life Prediction is very difficult, especially about the future but he predicted accurately and give me a solution too.",
+        image: "https://lh3.googleusercontent.com/d/10DCjcfIr6KWa9JNmw9UuwyECnOkNrV5G"
+      },
+      {
+        name: "Pramita",
+        role: "Entrepreneur",
+        quote: "You are blessing of God in my life. I would like to tell you sir you are mismerising by your words and action. I appreciate you getting in touch with me and helping me out. I think that was necessary. I ll be able to understand the situation more clearly as a result of this. I m glad I have this knowledge. Thank you sir for your wisdom, generous, overwhelming behavior. I would love to give 10 star.....",
+        image: "https://lh3.googleusercontent.com/d/1z1IU8P88ZUvP6oUBfO84ETLLbFT5Z6bO"
+      },
+      {
+        name: "Surabhi",
+        role: "Home Maker",
+        quote: "He was the best astrologer I have spoken with; he was so perfect with my analysis. Thankful to you, sir. Definitely, I suggest everyone reach out to him.",
+        image: "https://lh3.googleusercontent.com/d/1h7J_NOi3Erg3nSM4osxabSd_SnDURuCF"
+      },
+      {
+        name: "Dr. Dhanya",
+        role: "Doctor",
+        quote: "Very knowledgeable. Answering to the point, not beating around the bush, easy remedies, highly recommended",
+        image: "https://lh3.googleusercontent.com/d/1es1UfeSFgc7YM1QijM0rZTpabHvpFs3j"
+      },
+      {
+        name: "Rashmika A",
+        role: "IT Manager",
+        quote: "Thank you so much sir for the wonderful session regarding my marriage and love relationship.superbbb accuracy of my present life Thank you so very much",
+        image: "https://lh3.googleusercontent.com/d/1M6MF3t1Y5C16GsoRyxLxaqQJCVQjSeWU"
+      }
+    ];
+
+    let currentSlide = 0;
+    let autoPlayTimer = null;
+    const autoPlayInterval = 6000; // 6 seconds
+
+    // DOM Elements
+    const slidesWrapper = document.getElementById('slides-wrapper');
+    const paginationWrapper = document.getElementById('pagination-wrapper');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Convert potential raw google drive URLs dynamically for safety
+    function formatDriveUrl(url) {
+      if (!url) return 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop';
+      // Match ID from standard share or view forms
+      const match = url.match(/id=([^&]+)|d\/([^\/]+)(?:\/view)?/);
+      if (match) {
+        const id = match[1] || match[2];
+        return `https://lh3.googleusercontent.com/d/${id}`;
+      }
+      return url;
+    }
+
+    // Render Testimonial Slider Items and Indicators
+    function renderSlider() {
+      slidesWrapper.innerHTML = '';
+      paginationWrapper.innerHTML = '';
+
+      testimonials.forEach((t, i) => {
+        const imageUrl = formatDriveUrl(t.image);
+        
+        // Single Card Testimonial Body Layout
+        const slideNode = document.createElement('div');
+        slideNode.className = `testimonial-slide w-full flex flex-col items-center ${i === currentSlide ? 'active' : ''}`;
+        slideNode.id = `testimonial-slide-${i}`;
+        slideNode.innerHTML = `
+          <div class="flex flex-col items-center justify-center">
+            
+            <!-- Stars Rating Indicator -->
+            <div class="flex items-center justify-center space-x-1 mb-6 text-brand-accent">
+              ${Array(5).fill('<svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>').join('')}
+            </div>
+
+            <!-- Authentic Quote Content -->
+            <blockquote class="font-heading italic text-lg sm:text-xl md:text-2xl text-brand-navy leading-relaxed text-center px-4 md:px-12 max-w-3xl mb-8 border-none !p-0 select-none">
+              "${t.quote}"
+            </blockquote>
+
+            <!-- Client Avatar, Name, and Role -->
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-brand-accent shadow-md mb-3 bg-brand-bg flex items-center justify-center">
+                <img 
+                  src="${imageUrl}" 
+                  alt="${t.name}" 
+                  class="w-full h-full object-cover" 
+                  referrerpolicy="no-referrer"
+                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop';"
+                />
+              </div>
+              <h3 class="font-heading text-lg font-semibold text-brand-navy tracking-wide">
+                ${t.name}
+              </h3>
+              <p class="font-body text-xs sm:text-sm text-brand-accent font-semibold tracking-widest uppercase mt-0.5">
+                ${t.role}
+              </p>
+            </div>
+
+          </div>
+        `;
+        slidesWrapper.appendChild(slideNode);
+
+        // Dot Pagination Indicators
+        const dotButton = document.createElement('button');
+        dotButton.className = `w-3.5 h-3.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-accent ${i === currentSlide ? 'bg-brand-accent scale-110' : 'bg-brand-border hover:bg-brand-accent/50'}`;
+        dotButton.setAttribute('role', 'tab');
+        dotButton.setAttribute('aria-selected', i === currentSlide ? 'true' : 'false');
+        dotButton.setAttribute('aria-controls', `testimonial-slide-${i}`);
+        dotButton.setAttribute('aria-label', `Navigate to testimonial slide ${i + 1}`);
+        
+        dotButton.addEventListener('click', () => {
+          goToSlide(i);
+          resetAutoPlay();
+        });
+        paginationWrapper.appendChild(dotButton);
+      });
+    }
+
+    // Go to Specific Slide with transition
+    function goToSlide(index) {
+      if (index === currentSlide) return;
+      
+      const slides = document.querySelectorAll('.testimonial-slide');
+      const dots = paginationWrapper.querySelectorAll('button');
+      
+      // Deactivate current slide
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('bg-brand-accent', 'scale-110');
+      dots[currentSlide].classList.add('bg-brand-border');
+      dots[currentSlide].setAttribute('aria-selected', 'false');
+
+      // Update current index
+      currentSlide = (index + testimonials.length) % testimonials.length;
+
+      // Activate new slide
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.remove('bg-brand-border');
+      dots[currentSlide].classList.add('bg-brand-accent', 'scale-110');
+      dots[currentSlide].setAttribute('aria-selected', 'true');
+    }
+
+    // Arrow controls navigation
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    // Auto Play Controls supporting hover pause
+    function startAutoPlay() {
+      if (autoPlayTimer) clearInterval(autoPlayTimer);
+      autoPlayTimer = setInterval(nextSlide, autoPlayInterval);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+
+    // Event Listeners for Nav controls
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      resetAutoPlay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      resetAutoPlay();
+    });
+
+    // Keyboard support for slider accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        resetAutoPlay();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        resetAutoPlay();
+      }
+    });
+
+    // Hover Events for Slider
+    document.querySelector('section').addEventListener('mouseenter', stopAutoPlay);
+    document.querySelector('section').addEventListener('mouseleave', startAutoPlay);
+
+    // Initial load
+    renderSlider();
+    startAutoPlay();
+  </script>
+</body>
+</html>

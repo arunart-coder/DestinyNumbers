@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sacred Products - DestinyNumbers.in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Beautiful typography pairings requested: Cinzel (heading) and Inter (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cinzel', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            mysticNavy: '#1C3557',
+            royalGold: '#C9A84C',
+            warmBg: '#FAFAF8',
+            warmSurface: '#FFFFFF',
+            warmBorder: '#E8E2D8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAFAF8;
+      font-family: 'Inter', sans-serif;
+    }
+    /* Specific styling demands */
+    .font-serif-cinzel {
+      font-family: 'Cinzel', Georgia, serif;
+    }
+    .custom-card-hover {
+      transition: all 0.3s ease;
+    }
+    .custom-card-hover:hover {
+      transform: translateY(-4px);
+      border-color: #C9A84C;
+      box-shadow: 0 12px 24px rgba(28, 53, 87, 0.04);
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+  </style>
+</head>
+<body class="text-gray-800 selection:bg-yellow-100 min-h-screen flex flex-col justify-between">
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-warmBorder sticky top-0 z-[40] py-4 shadow-sm">
+    <div class="max-w-[1140px] mx-auto px-6 flex items-center justify-between">
+      <div class="flex flex-col text-left">
+        <h1 class="text-xl font-bold tracking-wide text-mysticNavy font-serif-cinzel leading-none">
+          DESTINY<span class="text-royalGold">NUMBERS</span>
+        </h1>
+        <span class="text-[9px] uppercase tracking-widest text-[#8A8A8A] mt-1 font-semibold">Scientific sacred geometry</span>
+      </div>
+      
+      <!-- Cart Trigger with count -->
+      <button onclick="toggleCartDrawer(true)" class="relative p-2.5 bg-mysticNavy text-white hover:bg-[#12284c] transition-colors rounded-none flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-royalGold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <span id="cart-nav-badge" class="absolute -top-1 -right-1 bg-royalGold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold font-sans">0</span>
+        <span class="text-xs font-semibold uppercase tracking-wider font-sans hidden sm:inline px-1">Cart</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Header Section (Matching React HeroHeader) -->
+  <section class="relative w-full overflow-hidden flex items-center justify-center text-center bg-[#0D1B3E] shadow-sm px-4" style="height: 190px;">
+    <div class="max-w-[800px] mx-auto relative z-10 w-full">
+      <span class="text-[10px] tracking-[0.3em] font-bold uppercase text-[#C9A84C] block mb-2">
+        Complementary Resonance Enhancements
+      </span>
+      <h1 class="font-serif-cinzel text-2xl md:text-3xl lg:text-4xl text-white leading-none mb-3 font-medium">
+        Sacred Products
+      </h1>
+      <p class="text-[12px] md:text-[13px] text-[#FAF7F0] opacity-90 leading-tight italic max-w-xl mx-auto">
+        "Every product is custom-energized under suitable Nakshatra timelines by Dr. Arun Poovaiah's Vedic team, serving as a material bridge to align physical structures with celestial codes."
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Grid Page -->
+  <main class="max-w-[1140px] mx-auto px-6 py-12 flex-grow w-full">
+    
+    <!-- Filter and Sort Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-6 border-b border-warmBorder">
+      <!-- Filters (Horizontal) -->
+      <div class="flex gap-2.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
+        <button onclick="filterCategory('All')" class="category-btn active px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-royalGold bg-mysticNavy text-white transition-colors" data-cat="All">All</button>
+        <button onclick="filterCategory('Yantras')" class="category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-warmBorder bg-white text-mysticNavy hover:border-royalGold transition-colors" data-cat="Yantras">Yantras</button>
+        <button onclick="filterCategory('Crystals')" class="category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-warmBorder bg-white text-mysticNavy hover:border-royalGold transition-colors" data-cat="Crystals">Crystals</button>
+        <button onclick="filterCategory('Vastu')" class="category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-warmBorder bg-white text-mysticNavy hover:border-royalGold transition-colors" data-cat="Vastu">Vastu</button>
+        <button onclick="filterCategory('Bracelets')" class="category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-warmBorder bg-white text-mysticNavy hover:border-royalGold transition-colors" data-cat="Bracelets">Bracelets</button>
+      </div>
+
+      <!-- Live Counter & Sort option -->
+      <div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto text-sm">
+        <span class="text-xs text-gray-500 font-medium">Viewing <strong id="product-count" class="text-mysticNavy font-semibold">12</strong> products</span>
+        <div class="flex items-center gap-2">
+          <label for="price-sort" class="text-xs text-gray-500 hidden sm:inline">Sort:</label>
+          <select id="price-sort" onchange="sortProducts(this.value)" class="bg-white border border-warmBorder px-3 py-1.5 text-xs text-mysticNavy outline-none focus:border-royalGold font-sans font-medium">
+            <option value="Default">Default</option>
+            <option value="LowToHigh">Price: Low to High</option>
+            <option value="HighToLow">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Live Grid -->
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Filled programmatically with JS -->
+    </div>
+  </main>
+
+  <!-- Slider of the Cart (Hidden Side panel Drawer) -->
+  <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-[100] hidden transition-opacity" onclick="toggleCartDrawer(false)"></div>
+  <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-[420px] bg-white shadow-2xl z-[101] transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <!-- Header cart -->
+    <div class="p-6 border-b border-warmBorder flex items-center justify-between bg-mysticNavy text-white">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-royalGold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <span class="font-serif-cinzel font-semibold tracking-wide text-md">Your Sacred Bag</span>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="p-1 hover:text-royalGold transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable cart items list -->
+    <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto space-y-5">
+      <!-- Empty state -->
+      <div id="cart-empty-view" class="text-center py-16 space-y-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <p class="text-xs text-gray-500 font-medium italic">Your bag is currently empty.</p>
+        <button onclick="toggleCartDrawer(false)" class="inline-block mt-2 px-6 py-2 border border-mysticNavy text-mysticNavy hover:bg-mysticNavy hover:text-white transition-all text-[11px] font-bold uppercase tracking-widest text-center">Shop Now</button>
+      </div>
+      <!-- Items programmatically shown here -->
+    </div>
+
+    <!-- Footer cart -->
+    <div id="cart-summary-block" class="p-6 border-t border-warmBorder bg-[#FAFAF8] space-y-4 hidden">
+      <div class="flex justify-between items-center text-xs text-gray-600 font-light">
+        <span>Subtotal</span>
+        <span id="cart-subtotal-text" class="font-semibold text-mysticNavy">₹0</span>
+      </div>
+      <div class="flex justify-between items-center text-xs text-gray-600 font-light pb-2">
+        <span class="flex items-center gap-1.5">Remedy Energization Fee <a href="#" class="group relative text-royalGold text-[10px] border border-royalGold/30 px-1 rounded-full hover:bg-royalGold hover:text-white">? <span class="hidden group-hover:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-2 bg-mysticNavy text-white text-[9px] w-48 leading-relaxed rounded-md shadow-lg pointer-events-none">Every item is charged with planetary affirmations on suitable constellations (nakshatras). Included free of cost.</span></a></span>
+        <span class="font-semibold text-green-600 uppercase tracking-widest text-[9px] font-bold">Complementary</span>
+      </div>
+      <div class="h-px bg-warmBorder"></div>
+      <div class="flex justify-between items-center text-sm font-sans">
+        <span class="font-bold text-mysticNavy uppercase text-xs tracking-wider">Estimated Total</span>
+        <span id="cart-grandtotal-text" class="font-bold text-royalGold text-base">₹0</span>
+      </div>
+      
+      <button onclick="checkoutToWhatsApp()" class="w-full py-4 bg-mysticNavy text-white hover:bg-[#12284c] transition-colors flex items-center justify-center gap-3 font-semibold text-xs tracking-widest uppercase shadow-md leading-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.261 2.264 3.504 5.275 3.502 8.483-.005 6.66-5.342 11.997-11.95 11.997-2.005-.001-3.973-.502-5.723-1.455L0 24zm6.29-3.722c1.61.956 3.197 1.467 4.704 1.468 5.511 0 9.991-4.485 9.995-10.004.002-2.673-1.033-5.184-2.915-7.07C16.248 2.782 13.75 1.742 11.01 1.74c-5.508 0-9.988 4.485-9.992 10.004-.001 1.79.48 3.528 1.393 5.088L1.4 21.135l4.947-1.296z"/>
+          <path d="M16.91 13.56c-.32-.16-1.89-.93-2.18-1.04-.3-.1-.5-.16-.72.16-.21.32-.83 1.04-1.01 1-.18-.08-.36-.18-.72-.37-1.12-.51-2.02-1.09-2.82-1.87-.19-.19-.38-.37-.56-.56-.17-.18-.04-.26.06-.34.09-.08.18-.21.28-.32.1-.1.13-.18.2-.31.06-.13.03-.24-.01-.32-.05-.08-.42-1.01-.58-1.39-.15-.36-.31-.3-.43-.31h-.37c-.13 0-.34.05-.52.24-.18.19-.7.68-.7 1.66s.71 1.93.81 2.06c.1.13 1.41 2.15 3.41 3.01.48.2 1 .25 1.37.2.41-.06 1.89-.78 2.15-1.53c.27-.75.27-1.4.19-1.53-.08-.13-.3-.21-.61-.37z"/>
+        </svg>
+         Order via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer general -->
+  <footer class="bg-[#2C2C2C] text-white/70 text-xs py-8 border-t border-gray-800">
+    <div class="max-w-[1140px] mx-auto px-6 text-center space-y-2">
+      <p class="font-serif-cinzel text-white text-sm font-semibold tracking-wide">DESTINY NUMBERS</p>
+      <p>Scientific Vedic Remedies & Resonance Correction.</p>
+      <p class="text-gray-500 pt-2">© 2026 Destiny Numbers. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Live product database
+    const PRODUCTS = [
+      { id: '1', name: 'Surya Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Gold-plated solar grid for solar activation, leadership, vitality, and authority.', rating: 4.9, image: 'https://lh3.googleusercontent.com/d/18oI9OUqPlwxQDii0SxWd9Byjf7Xaqq_7' },
+      { id: '2', name: 'Budh Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Sacred matrix for Mercury (Budha) to enhance intellect, business decisions, and trade growth.', rating: 4.8, image: 'https://lh3.googleusercontent.com/d/1ih1bR5ro8KkoTrgwFbbubn3Qheg07iL6' },
+      { id: '3', name: 'Budh-Pyra Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Pyramid-amplified Mercury grid for rapid analytical clarity, professional focus, and commerce.', rating: 4.9, image: 'https://lh3.googleusercontent.com/d/1ih1bR5ro8KkoTrgwFbbubn3Qheg07iL6' },
+      { id: '4', name: 'Pyra Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Multi-layered pyramid geometry plate matching prime cosmic frequencies for environmental balance.', rating: 4.7, image: 'https://lh3.googleusercontent.com/d/1PpZyqI7q5mtXkLQiTujf_dmC6k6vggS1' },
+      { id: '5', name: 'Gayatri Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Supreme radiant grid invoking divine light, spiritual expansion, clear consciousness, and block removal.', rating: 5.0, image: 'https://lh3.googleusercontent.com/d/1Jda5Y3zceqSb7KveQi7Z30P7FDAYYurd' },
+      { id: '6', name: 'Saraswati Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Refined geometric plate for concentration, artistic mastery, academics, and divine creative wisdom.', rating: 4.9, image: 'https://lh3.googleusercontent.com/d/1dL9rmIG6dcsQ4ICB_BPX2kyOaPk0JPtv' },
+      { id: '7', name: 'Surya-Pyra Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Pyramid solar grid creating accelerated energy amplification for business prestige and physical strength.', rating: 4.9, image: 'https://lh3.googleusercontent.com/d/18oI9OUqPlwxQDii0SxWd9Byjf7Xaqq_7' },
+      { id: '8', name: 'Surya-Budh Yantra', category: 'Yantras', categories: ['Yantras'], price: 7999, description: 'Budhaditya combination grid that balances logic and action. Triggers profound executive success.', rating: 5.0, image: 'https://lh3.googleusercontent.com/d/18oI9OUqPlwxQDii0SxWd9Byjf7Xaqq_7' },
+      { id: '9', name: 'Crystal Bracelet', category: 'Bracelets', categories: ['Bracelets', 'Crystals'], price: 600, description: 'Premium amethyst and quartz crystal beads tuned to clear energetic blockages and restore calm focus.', rating: 4.8, image: 'https://lh3.googleusercontent.com/d/1w_vJONo8RfWgo-rdBaPCBzHZwRz84Vzn' },
+      { id: '10', name: 'Wood Crystal Bracelet', category: 'Bracelets', categories: ['Bracelets'], price: 500, description: 'Natural aromatic sandalwood beads matched with genuine Tiger\'s Eye for deep grounding and shield protection.', rating: 4.7, image: 'https://lh3.googleusercontent.com/d/1HxGOgrqj6E2Uc7z2EC6hKXzZeM6hoBFX' },
+      { id: '11', name: 'Max Pyramid', category: 'Vastu', categories: ['Vastu'], price: 6000, description: 'Maximum pyramid energy for home, office, and meditation spaces.', rating: 4.9, image: 'https://lh3.googleusercontent.com/d/1NcGEeoddDjsl9XPyo5cqIcwTMM6fdJuC' },
+      { id: '12', name: 'Navratna for Vastu', category: 'Vastu', categories: ['Vastu'], price: 2500, description: 'Nine planets. One foundation. A lifetime of cosmic harmony.', rating: 4.8, image: 'https://lh3.googleusercontent.com/d/16PaRL-J3cJ9NYytzyvEdROAnyKBmYknm' }
+    ];
+
+    let currentCategory = 'All';
+    let currentSort = 'Default';
+    let cart = [];
+
+    // Initialize Page
+    function init() {
+      // Load cart from LocalStorage
+      const saved = localStorage.getItem('stand_products_cart');
+      if (saved) {
+        try { cart = JSON.parse(saved); } catch(e) {}
+      }
+      renderProducts();
+      updateCartUI();
+    }
+
+    // Render Grid
+    function renderProducts() {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+
+      // Filter
+      let list = [...PRODUCTS];
+      if (currentCategory !== 'All') {
+        list = list.filter(p => p.categories.includes(currentCategory));
+      }
+
+      // Sort
+      if (currentSort === 'LowToHigh') {
+        list.sort((a,b) => a.price - b.price);
+      } else if (currentSort === 'HighToLow') {
+        list.sort((a,b) => b.price - a.price);
+      }
+
+      // Count
+      document.getElementById('product-count').innerText = list.length;
+
+      // Cards creation
+      list.forEach(p => {
+        const ratingStars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
+        const cardHtml = \`
+          <div class="bg-white border border-warmBorder overflow-hidden relative flex flex-col justify-between custom-card-hover text-left p-3.5 sm:p-5">
+            <div>
+              <!-- Image + Category tag -->
+              <div class="relative bg-gray-50 aspect-square w-full overflow-hidden mb-4 border border-warmBorder/40">
+                <img src="\${p.image}" alt="\${p.name}" class="w-full h-full object-cover select-none">
+                <span class="absolute top-2 left-2 bg-mysticNavy text-white font-sans text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-none z-10">\${p.category}</span>
+              </div>
+              
+              <!-- Name & desc -->
+              <h4 class="text-mysticNavy text-sm sm:text-base font-bold font-sans tracking-wide leading-tight mb-1 truncate">\${p.name}</h4>
+              <p class="text-[11px] text-gray-500 font-light leading-snug mb-3 line-clamp-2 h-8">\${p.description}</p>
+            </div>
+
+            <div>
+              <!-- Stars -->
+              <div class="flex items-center gap-1.5 mb-2.5">
+                <span class="text-royalGold text-xs sm:text-sm leading-none">\${ratingStars}</span>
+                <span class="text-[10px] text-[#8A8A8A] font-medium font-sans">\${p.rating}</span>
+              </div>
+
+              <!-- Price and Buy -->
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 pt-2 border-t border-warmBorder/60">
+                <span class="text-sm font-bold text-mysticNavy font-sans whitespace-nowrap">₹\${p.price.toLocaleString('en-IN')}</span>
+                <button onclick="addToCart('\${p.id}')" class="w-full sm:w-auto px-4 py-2 bg-mysticNavy text-white hover:bg-[#12284c] transition-colors font-sans font-bold text-[10px] uppercase tracking-wider rounded-none leading-none select-none">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        \`;
+        grid.innerHTML += cardHtml;
+      });
+    }
+
+    // Filter Buttons state
+    function filterCategory(cat) {
+      currentCategory = cat;
+      const btns = document.querySelectorAll('.category-btn');
+      btns.forEach(b => {
+        if (b.getAttribute('data-cat') === cat) {
+          b.className = "category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-royalGold bg-mysticNavy text-white transition-colors";
+        } else {
+          b.className = "category-btn px-4 py-2 text-xs font-sans font-semibold tracking-wider uppercase border border-warmBorder bg-white text-mysticNavy hover:border-royalGold transition-colors";
+        }
+      });
+      renderProducts();
+    }
+
+    // Sort Handler
+    function sortProducts(val) {
+      currentSort = val;
+      renderProducts();
+    }
+
+    // Add code
+    function addToCart(id) {
+      const p = PRODUCTS.find(prod => prod.id === id);
+      if (!p) return;
+
+      const existing = cart.find(item => item.product.id === id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ product: p, quantity: 1 });
+      }
+
+      localStorage.setItem('stand_products_cart', JSON.stringify(cart));
+      updateCartUI();
+      toggleCartDrawer(true);
+    }
+
+    // Drawer Slide helper
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const overlay = document.getElementById('cart-drawer-overlay');
+      if (open) {
+        drawer.style.transform = 'translateX(0)';
+        overlay.classList.remove('hidden');
+      } else {
+        drawer.style.transform = 'translateX(100%)';
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // Modify quantities
+    function changeQuantity(id, delta) {
+      const item = cart.find(i => i.product.id === id);
+      if (!item) return;
+      item.quantity += delta;
+      if (item.quantity < 1) {
+        cart = cart.filter(i => i.product.id !== id);
+      }
+      localStorage.setItem('stand_products_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    // Delete item
+    function deleteItem(id) {
+      cart = cart.filter(i => i.product.id !== id);
+      localStorage.setItem('stand_products_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    // Update numbers
+    function updateCartUI() {
+      // Totals
+      const totalCount = cart.reduce((acc, i) => acc + i.quantity, 0);
+      const subtotal = cart.reduce((acc, i) => acc + (i.product.price * i.quantity), 0);
+
+      document.getElementById('cart-nav-badge').innerText = totalCount;
+
+      const container = document.getElementById('cart-items-container');
+      const emptyView = document.getElementById('cart-empty-view');
+      const summaryBlock = document.getElementById('cart-summary-block');
+
+      if (cart.length === 0) {
+        emptyView.style.display = 'block';
+        summaryBlock.style.display = 'none';
+        container.querySelectorAll('.cart-item-row').forEach(node => node.remove());
+      } else {
+        emptyView.style.display = 'none';
+        summaryBlock.style.display = 'block';
+        
+        // Remove existing items rows
+        container.querySelectorAll('.cart-item-row').forEach(node => node.remove());
+
+        // Append rows
+        cart.forEach(item => {
+          const rowHtml = \`
+            <div class="cart-item-row flex items-start gap-4 pb-4 border-b border-warmBorder/60 text-left">
+              <div class="w-16 h-16 bg-gray-50 border border-warmBorder/40 overflow-hidden flex-shrink-0">
+                <img src="\${item.product.image}" class="w-full h-full object-cover">
+              </div>
+              <div class="flex-grow min-w-0">
+                <div class="flex justify-between items-start gap-2">
+                  <h5 class="text-xs font-bold text-mysticNavy truncate font-sans">\${item.product.name}</h5>
+                  <button onclick="deleteItem('\${item.product.id}')" class="text-gray-400 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+                <p class="text-[10px] text-royalGold font-medium font-sans uppercase mb-2">\${item.product.category}</p>
+                <div class="flex justify-between items-center bg-[#FAFAF8] border border-warmBorder px-2.5 py-1.5 w-max gap-3 mt-1">
+                  <button onclick="changeQuantity('\${item.product.id}', -1)" class="p-0.5 hover:text-royalGold text-xs font-semibold leading-none font-mono">-</button>
+                  <span class="text-xs font-bold text-mysticNavy font-sans select-none">\${item.quantity}</span>
+                  <button onclick="changeQuantity('\${item.product.id}', 1)" class="p-0.5 hover:text-royalGold text-xs font-semibold leading-none font-mono">+</button>
+                </div>
+                <div class="text-xs font-bold text-mysticNavy font-sans pt-2 text-right">
+                  ₹\${(item.product.price * item.quantity).toLocaleString('en-IN')}
+                </div>
+              </div>
+            </div>
+          \`;
+          container.insertAdjacentHTML('beforeend', rowHtml);
+        });
+
+        // Set text
+        document.getElementById('cart-subtotal-text').innerText = '₹' + subtotal.toLocaleString('en-IN');
+        document.getElementById('cart-grandtotal-text').innerText = '₹' + subtotal.toLocaleString('en-IN');
+      }
+    }
+
+    // WhatsApp Direct checkout
+    function checkoutToWhatsApp() {
+      const phone = '919845012345'; // Configured WhatsApp Contact Number
+      const intro = "Hello Destiny Numbers, I would like to order the following sacred products:\\n\\n";
+      const totalVal = cart.reduce((acc, i) => acc + (i.product.price * i.quantity), 0);
+      const itemsText = cart.map((item, index) => {
+        return (index + 1) + ". " + item.product.name + " (x" + item.quantity + ") — ₹" + (item.product.price * item.quantity).toLocaleString('en-IN');
+      }).join('\\n');
+      const outro = "\\n\\nTotal Cart Value: ₹" + totalVal.toLocaleString('en-IN') + "\\n\\nPlease share booking links. Thank you!";
+      
+      const fullMsg = encodeURIComponent(intro + itemsText + outro);
+      window.open("https://wa.me/" + phone + "?text=" + fullMsg, "_blank");
+    }
+
+    // Boot
+    window.onload = init;
+  </script>
+</body>
+</html>

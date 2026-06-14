@@ -1,0 +1,251 @@
+{
+  "entities": {
+    "Author": {
+      "title": "Author",
+      "description": "Article author information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "avatar": { "type": "string" },
+        "role": { "type": "string" },
+        "bio": { "type": "string" }
+      },
+      "required": ["name", "role"]
+    },
+    "Revision": {
+      "title": "Revision",
+      "description": "Post revision history",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date-time" },
+        "content": { "type": "string" },
+        "wordCount": { "type": "number" }
+      },
+      "required": ["date", "content", "wordCount"]
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "A single blog article",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["draft", "published", "scheduled", "pending"] },
+        "visibility": { "type": "string", "enum": ["public", "private"] },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "thumbnailAlt": { "type": "string" },
+        "thumbnailPosition": { "type": "string", "enum": ["top", "hero", "card", "center"] },
+        "author": { "$ref": "#/entities/Author" },
+        "publishDate": { "type": "string", "format": "date-time" },
+        "scheduledDate": { "type": "string", "format": "date-time" },
+        "readTime": { "type": "string" },
+        "wordCount": { "type": "number" },
+        "views": { "type": "number" },
+        "seoTitle": { "type": "string" },
+        "metaDesc": { "type": "string" },
+        "focusKeyword": { "type": "string" },
+        "ogImage": { "type": "string" },
+        "commentsEnabled": { "type": "boolean" },
+        "series": { "type": "string" },
+        "seriesPart": { "type": "number" },
+        "revisions": { "type": "array", "items": { "$ref": "#/entities/Revision" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "content", "status", "author", "createdAt", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Blog category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "color": { "type": "string" },
+        "postCount": { "type": "number" }
+      },
+      "required": ["name", "color", "postCount"]
+    },
+    "MediaItem": {
+      "title": "Media Item",
+      "description": "Uploaded media item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "url": { "type": "string" },
+        "filename": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "size": { "type": "string" }
+      },
+      "required": ["id", "url", "filename", "date"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "User comment on a post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "articleSlug": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "content": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "approved", "spam"] }
+      },
+      "required": ["articleSlug", "name", "email", "content", "status", "date"]
+    },
+    "BlogSettings": {
+      "title": "Blog Settings",
+      "description": "Global blog configuration",
+      "type": "object",
+      "properties": {
+        "blogTitle": { "type": "string" },
+        "blogDescription": { "type": "string" },
+        "postsPerPage": { "type": "number" },
+        "featuredPostEnabled": { "type": "boolean" },
+        "commentsEnabled": { "type": "boolean" },
+        "relatedPostsEnabled": { "type": "boolean" },
+        "readingProgressBar": { "type": "boolean" },
+        "socialSharing": {
+          "type": "object",
+          "properties": {
+            "whatsapp": { "type": "boolean" },
+            "twitter": { "type": "boolean" },
+            "linkedin": { "type": "boolean" },
+            "copyLink": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "CMSData": {
+      "title": "CMS Data",
+      "description": "Main website content",
+      "type": "object",
+      "properties": {
+        "hero": { "$ref": "#/entities/HeroBanner" },
+        "slides": { "type": "array", "items": { "$ref": "#/entities/HeroSlide" } },
+        "bio": { "$ref": "#/entities/BioData" },
+        "navLinks": { "type": "array", "items": { "$ref": "#/entities/NavLink" } },
+        "services": { "type": "array", "items": { "$ref": "#/entities/ServiceItem" } },
+        "testimonials": { "type": "array", "items": { "$ref": "#/entities/Testimonial" } },
+        "pricing": { "type": "array", "items": { "$ref": "#/entities/PricingTier" } },
+        "siteTagline": { "type": "string" }
+      }
+    },
+    "HeroBanner": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "image": { "type": "string" },
+        "ctaText": { "type": "string" },
+        "ctaLink": { "type": "string" }
+      }
+    },
+    "HeroSlide": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "image": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" }
+      }
+    },
+    "BioData": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "surname": { "type": "string" },
+        "tagline": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "NavLink": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "path": { "type": "string" }
+      }
+    },
+    "ServiceItem": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      }
+    },
+    "Testimonial": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "city": { "type": "string" },
+        "quote": { "type": "string" },
+        "rating": { "type": "number" },
+        "image": { "type": "string" }
+      }
+    },
+    "PricingTier": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "string" },
+        "badge": { "type": "string" },
+        "valid": { "type": "string" },
+        "consultations": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "cta": { "type": "string" },
+        "popular": { "type": "boolean" },
+        "theme": { "type": "string", "enum": ["silver", "gold", "diamond", "platinum"] }
+      }
+    }
+  },
+  "firestore": {
+    "/cms/data": {
+      "schema": "CMSData",
+      "description": "Site content"
+    },
+    "/posts/{postId}": {
+      "schema": "BlogPost",
+      "description": "Blog articles"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Blog categories"
+    },
+    "/media/{mediaId}": {
+      "schema": "MediaItem",
+      "description": "Media library items"
+    },
+    "/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Post comments"
+    },
+    "/settings/blog": {
+      "schema": "BlogSettings",
+      "description": "Blog configuration"
+    },
+    "/admins/{userId}": {
+      "schema": "object",
+      "description": "Admin access control"
+    }
+  }
+}
