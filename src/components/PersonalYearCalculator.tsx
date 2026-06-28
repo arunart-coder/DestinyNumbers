@@ -16,6 +16,10 @@ interface PersonalYearResult {
   luckyDays: string[];
   luckyGem: string;
   monthlyProjections: { month: string; number: number; theme: string }[];
+  cycleStartStr: string;
+  cycleEndStr: string;
+  isPastBirthday: boolean;
+  actualCalculationYear: number;
 }
 
 const MONTH_NAMES = [
@@ -157,15 +161,50 @@ export function PersonalYearCalculator({ onBack }: { onBack?: () => void }) {
         return num;
       };
 
-      // Personal Year formula: Day Sum + Month Sum + Target Year Sum
+      // Get current date relative to target year
+      const today = new Date();
+      // Reference date is target year with today's month & day
+      const refDate = new Date(targetYear, today.getMonth(), today.getDate());
+      const birthdayOfTargetYear = new Date(targetYear, birthMonth - 1, birthDay);
+
+      let actualCalculationYear = targetYear;
+      let cycleStartYear = targetYear;
+      let cycleEndYear = targetYear + 1;
+      let isPastBirthday = true;
+
+      if (refDate < birthdayOfTargetYear) {
+        actualCalculationYear = targetYear - 1;
+        cycleStartYear = targetYear - 1;
+        cycleEndYear = targetYear;
+        isPastBirthday = false;
+      }
+
+      // Personal Year formula: Day Sum + Month Sum + Actual Calculation Year Sum
       const daySum = reduceToSingleDigit(birthDay);
       const monthSum = reduceToSingleDigit(birthMonth);
-      const yearSum = reduceToSingleDigit(targetYear);
+      const yearSum = reduceToSingleDigit(actualCalculationYear);
 
       const totalSum = daySum + monthSum + yearSum;
       const personalYearNumber = reduceToSingleDigit(totalSum);
 
       const details = YEAR_DETAILS[personalYearNumber];
+
+      // Format date strings nicely
+      const monthName = MONTH_NAMES[birthMonth - 1];
+      let prevDay = birthDay - 1;
+      let endMonthName = monthName;
+      let endMonth = birthMonth;
+      let endYear = cycleEndYear;
+
+      if (prevDay === 0) {
+        const prevMonthDate = new Date(cycleEndYear, birthMonth - 1, 0);
+        prevDay = prevMonthDate.getDate();
+        endMonth = prevMonthDate.getMonth() + 1;
+        endMonthName = MONTH_NAMES[endMonth - 1];
+      }
+
+      const cycleStartStr = `${monthName} ${birthDay}, ${cycleStartYear}`;
+      const cycleEndStr = `${endMonthName} ${prevDay}, ${endYear}`;
 
       // Calculate monthly projections
       // Monthly Personal Cycle = Personal Year Number + Current Month (1-12) reduced
@@ -206,7 +245,11 @@ export function PersonalYearCalculator({ onBack }: { onBack?: () => void }) {
         luckyColors: details.luckyColors,
         luckyDays: details.luckyDays,
         luckyGem: details.luckyGem,
-        monthlyProjections
+        monthlyProjections,
+        cycleStartStr,
+        cycleEndStr,
+        isPastBirthday,
+        actualCalculationYear
       });
 
       setIsCalculating(false);
@@ -324,7 +367,29 @@ export function PersonalYearCalculator({ onBack }: { onBack?: () => void }) {
                 </div>
 
                 <h3 className="font-sans text-2xl font-bold text-[#1C3557] mt-2 mb-1">{result.title}</h3>
-                <p className="text-[17px] font-sans tracking-wide italic text-[#1C3557]/60 max-w-xl mx-auto">{result.subTitle}</p>
+                <p className="text-[17px] font-sans tracking-wide italic text-[#1C3557]/60 max-w-xl mx-auto mb-6">{result.subTitle}</p>
+
+                {/* Highly structured Active Cycle date range box */}
+                <div className="inline-flex flex-col items-center justify-center p-5 bg-[#F5ECD7]/45 border border-[#C9A84C]/35 rounded-none max-w-xl mx-auto text-center shadow-sm">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <Calendar className="w-4 h-4 text-[#C9A84C]" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#C9A84C]">
+                      Active Vibration Timeline
+                    </span>
+                  </div>
+                  <span className="text-[16px] font-bold text-[#1C3557] font-display">
+                    {result.cycleStartStr} to {result.cycleEndStr}
+                  </span>
+                  {!result.isPastBirthday ? (
+                    <p className="text-[11.5px] text-[#1C3557]/70 font-sans mt-2.5 leading-relaxed max-w-md">
+                      *Note: Since your birthday in the year {result.targetYear} ({MONTH_NAMES[result.birthMonth - 1]} {result.birthDay}) has not arrived yet relative to today's date, you are still actively under the vibration of the {result.actualCalculationYear} Personal Year.
+                    </p>
+                  ) : (
+                    <p className="text-[11.5px] text-[#1C3557]/70 font-sans mt-2.5 leading-relaxed max-w-md">
+                      *Note: Your birthday in {result.targetYear} has occurred or is occurring today, meaning you have successfully transitioned into your {result.targetYear} Personal Year vibration.
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Core Breakdown Grid */}

@@ -117,51 +117,38 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
   };
 
   return (
-    <div className="w-full bg-[#12173A] text-white font-sans overflow-hidden shadow-2xl border border-white/10 rounded-none pb-4">
+    <div className="w-full bg-transparent text-[#1C3557] font-sans overflow-hidden rounded-none pb-4">
       {/* SECTION 1: Hero Section */}
-      <section 
-        className="relative w-full overflow-hidden flex items-center justify-center text-center bg-[#0D1B3E] shadow-md px-4 pt-[45px] md:pt-[55px] pb-5 mb-2"
-        style={{ 
-          minHeight: '170px'
-        }}
-      >
-
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-[800px] mx-auto relative z-10 w-full"
-        >
-          <div className="mb-4">
-            <h2 style={{
-              fontFamily: "Georgia, 'Times New Roman', serif",
-              fontSize: '24px',
-              fontWeight: 400,
-              lineHeight: 1.3,
-              margin: '0 0 4px 0',
-              color: '#ffffff',
-              letterSpacing: '0',
-              textAlign: 'center'
-            }}>
-              Decode the <span style={{ color: '#C9A84C' }}>energy hidden</span> in your name
-            </h2>
-            <div style={{ width: '60px', height: '1px', background: '#C9A84C', margin: '4px auto 0' }}></div>
+      <div className="text-center mb-10 pt-[45px] md:pt-[55px]">
+        <div className="mb-4">
+          <h2 style={{
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontSize: '24px',
+            fontWeight: 400,
+            lineHeight: 1.3,
+            margin: '0 0 4px 0',
+            color: '#1C3557',
+            letterSpacing: '0',
+            textAlign: 'center'
+          }}>
+            Decode the <span style={{ color: '#C9A84C' }}>energy hidden</span> in your name
+          </h2>
+          <div style={{ width: '60px', height: '1px', background: '#C9A84C', margin: '4px auto 0' }}></div>
+        </div>
+        <p className="text-[14px] md:text-[15px] text-[#1C3557]/70 max-w-xl mx-auto font-sans leading-relaxed italic mb-4">
+          Discover your expression, heart desire, and personality numbers using the ancient Pythagorean vibrational system.
+        </p>
+        {onBack && (
+          <div className="flex justify-center mt-6">
+            <button 
+              onClick={onBack}
+              className="px-8 py-4 bg-white border border-[#1C3557]/10 text-[#1C3557] font-display font-black tracking-widest text-[11px] uppercase hover:bg-[#1C3557] hover:text-white transition-all flex items-center justify-center gap-3 cursor-pointer shadow-sm relative z-10"
+            >
+              Back to Tools <ArrowLeft className="w-4 h-4" />
+            </button>
           </div>
-          <p className="text-[14px] md:text-[15px] text-white/80 max-w-xl mx-auto font-sans leading-relaxed italic mb-4">
-            Discover your expression, heart desire, and personality numbers using the ancient Pythagorean vibrational system.
-          </p>
-          {onBack && (
-            <div className="flex justify-center mt-6">
-              <button 
-                onClick={onBack}
-                className="px-8 py-4 bg-white border border-[#1C3557]/10 text-[#1C3557] font-display font-black tracking-widest text-[11px] uppercase hover:bg-[#1C3557] hover:text-white transition-all flex items-center justify-center gap-3 cursor-pointer shadow-sm relative z-10"
-              >
-                Back to Tools <ArrowLeft className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-        </motion.div>
-      </section>
+        )}
+      </div>
 
       {/* SECTION 2: Calculator Card */}
       <section id="calculator-card" className="py-4 md:py-6 px-4 max-w-2xl mx-auto relative mt-[50px]">
@@ -169,7 +156,7 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="glass-card bg-white/5 backdrop-blur-2xl border border-white/10 rounded-none p-6 md:p-10 shadow-2xl relative overflow-hidden"
+          className="glass-card bg-white/40 border border-[#C9A84C]/25 rounded-none p-6 md:p-10 shadow-xl relative overflow-hidden"
         >
           <div className="mb-6">
             <label className="text-sm md:text-base font-bold tracking-[0.15em] text-[#1C3557] mb-4 block text-center uppercase">
@@ -224,7 +211,7 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
           <section id="results-section" className="py-4 md:py-6 px-4 max-w-7xl mx-auto">
             <div className="text-center mb-6">
               <span className="text-[10px] tracking-[0.6em] font-black text-[#C9A84C] mb-2 block">Analysis complete</span>
-              <h2 className="text-4xl md:text-5xl font-display font-light italic text-[#FAF7F0]">Your Cosmic <span className="not-italic font-black text-white">Vibrational Profile</span></h2>
+              <h2 className="text-4xl md:text-5xl font-display font-light italic text-[#1C3557]">Your Cosmic <span className="not-italic font-black text-[#1C3557]">Vibrational Profile</span></h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -236,24 +223,24 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
                   transition={{ delay: idx * 0.1 }}
                   className="group"
                 >
-                  <div className="h-full bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-none p-5 md:p-6 hover:border-[#C9A84C]/30 transition-all duration-300 relative overflow-hidden">
+                  <div className="h-full bg-white/40 border border-[#C9A84C]/25 rounded-none p-5 md:p-6 hover:border-[#C9A84C]/35 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A84C]/5 blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:bg-[#C9A84C]/10 transition-colors" />
                     
-                    <div className="w-12 h-12 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#C9A84C] mb-3 group-hover:bg-[#C9A84C] group-hover:text-black transition-all duration-300">
+                    <div className="w-12 h-12 rounded-none bg-[#1C3557]/5 border border-[#1C3557]/10 flex items-center justify-center text-[#C9A84C] mb-3 group-hover:bg-[#C9A84C] group-hover:text-white transition-all duration-300">
                       <res.icon className="w-5 h-5" />
                     </div>
 
-                    <h3 className="text-lg font-display font-bold text-white mb-2 italic truncate">{res.title}</h3>
+                    <h3 className="text-lg font-display font-bold text-[#1C3557] mb-2 italic truncate">{res.title}</h3>
                     
                     <div className="flex items-baseline gap-2 mb-3">
-                      <span className="text-[20pt] font-display font-black text-white leading-none">
+                      <span className="text-[20pt] font-display font-black text-[#1C3557] leading-none">
                         {res.final === 11 || res.final === 22 || res.final === 33 ? `${res.final}/${reduceNumber(res.final, false)}` : res.final}
                       </span>
                       <div className="h-6 w-[2px] bg-[#C9A84C]/20 rotate-[20deg]" />
-                      <span className="text-sm text-slate-500 font-display font-light">Compound {res.total}</span>
+                      <span className="text-sm text-[#1C3557]/50 font-display font-light">Compound {res.total}</span>
                     </div>
 
-                    <p className="text-xs text-slate-400 font-light leading-relaxed">
+                    <p className="text-xs text-[#1C3557]/80 font-light leading-relaxed">
                       {res.desc}
                     </p>
                   </div>
@@ -266,13 +253,13 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="mt-6 bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-none p-5 md:p-6"
+              className="mt-6 bg-white/40 border border-[#C9A84C]/25 rounded-none p-5 md:p-6 shadow-md"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
+                <div className="w-10 h-10 rounded-none bg-[#1C3557]/5 border border-[#1C3557]/10 flex items-center justify-center text-[#1C3557]/60">
                   <Search className="w-5 h-5" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-white">Mathematical Breakdown</h3>
+                <h3 className="text-xl font-display font-bold text-[#1C3557]">Mathematical Breakdown</h3>
               </div>
 
               <div className="space-y-6">
@@ -283,17 +270,17 @@ export default function PythagoreanCalculator({ onBack }: { onBack?: () => void 
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-2">
                       {res.details.map((item, i) => (
                         <div key={i} className="flex flex-col items-center">
-                          <span className="text-[18pt] font-display font-medium text-white">{item.char}</span>
-                          <span className="text-[9px] font-black text-slate-500">({item.val})</span>
+                          <span className="text-[18pt] font-display font-medium text-[#1C3557]">{item.char}</span>
+                          <span className="text-[9px] font-black text-[#1C3557]/50">({item.val})</span>
                         </div>
                       ))}
-                      <div className="text-slate-600 px-2">=</div>
-                      <div className="text-[18pt] font-display font-black text-white">{res.total}</div>
-                      <div className="text-slate-600 px-2">=</div>
+                      <div className="text-[#1C3557]/40 px-2 font-display font-black">=</div>
+                      <div className="text-[18pt] font-display font-black text-[#1C3557]">{res.total}</div>
+                      <div className="text-[#1C3557]/40 px-2 font-display font-black">=</div>
                       <div className="text-[18pt] font-display font-black text-[#C9A84C]">{res.final}</div>
                     </div>
                     
-                    <p className="text-[10px] text-slate-500 font-light italic">
+                    <p className="text-[10px] text-[#1C3557]/60 font-light italic">
                       {res.title === 'Expression Number' ? 'Includes all letters in full name.' : 
                        res.title === 'Heart Desire Number' ? 'Includes only vowels (A, E, I, O, U).' : 
                        'Includes only consonants.'}

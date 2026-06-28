@@ -289,7 +289,7 @@ export default function FreeTarotReading() {
     }
 
     // 2. Base
-    ctx.fillStyle = '#1c0f35';
+    ctx.fillStyle = '#1C3557';
     ctx.strokeStyle = '#c8a84b';
     ctx.lineWidth = isHovered ? 2 : 1;
     ctx.beginPath();
@@ -561,15 +561,15 @@ export default function FreeTarotReading() {
   }, [updateParticles, updateFan, shuffleDeck]);
 
   return (
-    <div className="min-h-screen bg-[#06030f] text-[#e8d5a3] font-serif overflow-x-hidden selection:bg-[#c8a84b]/20 flex flex-col items-center">
+    <div className="min-h-screen bg-[#F5ECD7] text-[#1C3557] font-serif overflow-x-hidden selection:bg-[#c8a84b]/20 flex flex-col items-center">
       <canvas 
         ref={particleCanvasRef}
         className="fixed inset-0 w-full h-full pointer-events-none z-0"
       />
-      <div className="fixed inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.7)_100%)]" />
+      <div className="fixed inset-0 pointer-events-none z-10 bg-transparent" />
 
       <div className={`relative z-20 w-full px-4 py-4 flex flex-col items-center transition-all duration-500 ${selectedCard ? 'max-w-6xl' : 'max-w-4xl'}`}>
-        <Link to="/tools" className="self-start inline-flex items-center gap-2 text-[#7a6a4a] hover:text-[#e8d5a3] text-[10px] tracking-[0.4em] uppercase font-display mb-3 transition-all group">
+        <Link to="/tools" className="self-start inline-flex items-center gap-2 text-[#7a6a4a] hover:text-[#1C3557] text-[10px] tracking-[0.4em] uppercase font-display mb-3 transition-all group">
           <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> Back
         </Link>
 
@@ -582,7 +582,7 @@ export default function FreeTarotReading() {
               <h1 className="text-xs font-display font-black tracking-[0.35em] uppercase text-[#c8a84b]">
                  ✦ THE ORACLE ✦
               </h1>
-              <p className="text-white text-[10px] tracking-[0.1em] font-medium uppercase">
+              <p className="text-[#1C3557]/80 text-[10px] tracking-[0.1em] font-black uppercase">
                  Focus your question · Choose ONE card
               </p>
             </header>
@@ -590,10 +590,10 @@ export default function FreeTarotReading() {
             <div className="w-full max-w-[360px] mb-2.5 relative group mx-auto">
                <input 
                   type="text"
-                  placeholder="Hold your question in mind..."
+                  placeholder="Write your question"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
-                  className="w-full bg-white/5 border border-[#c8a84b]/30 rounded-lg py-1.5 px-4 text-[#e8d5a3] placeholder:text-[#7a6a4a]/40 font-display italic text-center text-[12px] focus:outline-none focus:ring-1 focus:ring-[#c8a84b] transition-all"
+                  className="w-full bg-white border border-[#c8a84b]/40 rounded-lg py-1.5 px-4 text-[#1C3557] placeholder:text-[#1C3557]/50 font-display italic text-center text-[12px] focus:outline-none focus:ring-1 focus:ring-[#c8a84b] transition-all shadow-sm"
                />
             </div>
 
@@ -605,7 +605,7 @@ export default function FreeTarotReading() {
                ✦ {isShuffling ? 'Mixing the Fates' : 'Shuffle the Deck'} ✦
             </button>
 
-            <p className="text-[10px] text-white italic mb-1 font-light tracking-widest min-h-[15px]">
+            <p className="text-[10px] text-[#1C3557] font-bold italic mb-1 tracking-widest min-h-[15px]">
                {instruction}
             </p>
 
@@ -631,7 +631,7 @@ export default function FreeTarotReading() {
                    animate={{ opacity: 1, scale: 1, y: 0 }}
                    exit={{ opacity: 0, scale: 0.95, y: -15 }}
                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                   className="w-full bg-white/[0.03] border border-[#c8a84b]/15 rounded-xl p-4 md:p-6 backdrop-blur-xl relative overflow-hidden shadow-2xl"
+                   className="w-full bg-white border-2 border-[#c8a84b] rounded-xl p-4 md:p-6 relative overflow-hidden shadow-2xl text-black"
                 >
                    {/* Decorative subtle ambient backdrop glow */}
                    <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#c8a84b]/5 to-transparent pointer-events-none" />
@@ -640,13 +640,13 @@ export default function FreeTarotReading() {
                      
                      {/* Left Sub-column: Chosen 3D Card */}
                      <div className="sm:col-span-5 flex flex-col items-center justify-center p-1">
-                        <span className="text-[9px] tracking-[0.3em] font-medium text-[#7a6a4a] uppercase mb-2 block font-display">
+                        <span className="text-[9px] tracking-[0.3em] font-black text-black uppercase mb-2 block font-display">
                            ✦ YOUR CHOSEN KEY ✦
                         </span>
                         <div className="w-[120px] h-[201px] perspective-[1000px]">
                            <div className={`relative w-full h-full transition-transform duration-[600ms] transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
                               {/* Card Back */}
-                              <div className="absolute inset-0 backface-hidden rounded-lg border-[1px] border-[#c8a84b]/50 bg-[#1c0f35] flex items-center justify-center p-2 shadow-[0_0_15px_rgba(200,168,75,0.2)]">
+                              <div className="absolute inset-0 backface-hidden rounded-lg border-[1px] border-[#c8a84b]/50 bg-[#1C3557] flex items-center justify-center p-2 shadow-[0_0_15px_rgba(200,168,75,0.2)]">
                                   <div className="border border-[#c8a84b]/15 w-full h-full flex items-center justify-center relative overflow-hidden">
                                      <div className="absolute inset-0 bg-[#c8a84b]/5 opacity-25" />
                                      <RefreshCw className="w-8 h-8 text-[#c8a84b]/20 animate-[spin_12s_linear_infinite]" />
@@ -674,32 +674,32 @@ export default function FreeTarotReading() {
                               className="space-y-3"
                             >
                                <div className="space-y-0.5">
-                                  <p className="text-[9px] tracking-[0.2em] font-medium text-[#c8a84b]/60 uppercase font-display">
+                                  <p className="text-[9px] tracking-[0.2em] font-black text-black/60 uppercase font-display">
                                      Major Arcana · Rank {selectedCard.card.rank}
                                   </p>
-                                  <h2 className="text-base font-display text-[#c8a84b] font-bold tracking-tight">
+                                  <h2 className="text-lg font-display text-black font-black tracking-tight">
                                      {selectedCard.card.name}
                                   </h2>
                                </div>
 
-                               <div className="h-px w-full bg-[#c8a84b]/15" />
+                               <div className="h-px w-full bg-black/10" />
 
                                <div className="flex flex-col sm:flex-row items-center gap-2">
-                                  <span className="text-[10px] tracking-widest text-[#7a6a4a] uppercase font-mono">
+                                  <span className="text-[10px] tracking-widest text-black/80 uppercase font-mono font-bold">
                                      The Answer Is:
                                   </span>
                                   <span 
-                                     className="text-base font-display font-black tracking-widest px-4 py-0.5 rounded-lg bg-black/40 border border-[#c8a84b]/20"
+                                     className="text-base font-display font-black tracking-widest px-4 py-0.5 rounded-lg bg-black text-white border border-[#c8a84b]/40"
                                      style={{ color: selectedCard.card.yes ? '#5eeb9d' : '#eb5e5e' }}
                                   >
                                      {selectedCard.card.yes ? 'YES' : 'NO'}
                                   </span>
                                </div>
 
-                               <div className="h-px w-full bg-[#c8a84b]/15" />
+                               <div className="h-px w-full bg-black/10" />
 
                                <div className="relative py-1">
-                                  <p className="text-xs italic text-[#e8d5a3]/90 leading-relaxed font-light">
+                                  <p className="text-sm italic text-black leading-relaxed font-bold">
                                      "{selectedCard.card.yes ? selectedCard.card.msg_yes : selectedCard.card.msg_no}"
                                   </p>
                                </div>
@@ -707,7 +707,7 @@ export default function FreeTarotReading() {
                                <div className="pt-1 flex justify-center sm:justify-start">
                                   <button 
                                     onClick={resetAll}
-                                    className="px-4 py-1.5 bg-[#c8a84b] text-[#06030f] hover:bg-[#b5953e] font-display text-[9px] tracking-[0.2em] uppercase transition-all font-semibold shadow"
+                                    className="px-4 py-1.5 bg-black text-white hover:bg-black/90 font-display text-[9px] tracking-[0.2em] uppercase transition-all font-semibold shadow"
                                   >
                                     ✦ Shuffle Again ✦
                                   </button>
@@ -716,7 +716,7 @@ export default function FreeTarotReading() {
                           ) : (
                             <div className="py-8 flex flex-col items-center sm:items-start justify-center space-y-2">
                                <RefreshCw className="w-6 h-6 text-[#c8a84b]/40 animate-spin" />
-                               <p className="text-[9px] tracking-widest uppercase text-[#7a6a4a] animate-pulse">
+                               <p className="text-[9px] tracking-widest uppercase text-black font-black animate-pulse">
                                   Whispering to the ether...
                                 </p>
                             </div>

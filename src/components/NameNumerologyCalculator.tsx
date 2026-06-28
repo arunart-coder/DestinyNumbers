@@ -168,7 +168,7 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
                         value={name}
                         onChange={(e) => setName(e.target.value.replace(/[0-9]/g, ''))}
                         placeholder="Legal Name..."
-                        className="w-full bg-white border border-gold/20 rounded-xl px-6 py-4 text-black font-display text-lg tracking-widest focus:border-gold outline-none transition-all placeholder:text-gray-300"
+                        className="w-full bg-white border border-royal-gold/20 rounded-xl px-6 py-4 text-black font-display text-lg tracking-widest focus:border-royal-gold outline-none transition-all placeholder:text-gray-300"
                       />
                    </div>
                    <div>
@@ -177,7 +177,7 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
                         type="date"
                         value={dob}
                         onChange={(e) => setDob(e.target.value)}
-                        className="w-full bg-white border border-gold/20 rounded-xl px-6 py-4 text-black font-display text-lg tracking-widest focus:border-gold outline-none transition-all"
+                        className="w-full bg-white border border-royal-gold/20 rounded-xl px-6 py-4 text-black font-display text-lg tracking-widest focus:border-royal-gold outline-none transition-all"
                       />
                    </div>
                 </div>
@@ -186,21 +186,24 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
                   onClick={calculateNameNumerology}
                   disabled={!name.trim() || !dob || isCalculating}
                   className={cn(
-                    "w-full py-6 rounded-2xl font-display font-bold tracking-[0.4em] text-[11px] transition-all flex items-center justify-center gap-4",
-                    name.trim() && dob && !isCalculating
-                      ? "bg-premium-charcoal text-white shadow-2xl hover:scale-[1.02] active:scale-95"
-                      : "bg-black/5 text-black/20 border border-black/5 cursor-not-allowed"
+                    "w-full h-[56px] rounded-none font-serif font-semibold tracking-[0.2em] text-[14px] transition-all flex items-center justify-center gap-4 uppercase shadow-lg",
+                    (!name.trim() || !dob || isCalculating)
+                      ? "bg-mystic-navy text-[#F5ECD7]/80 cursor-not-allowed border border-[#C9A84C]/10"
+                      : "bg-mystic-navy text-[#F5ECD7] hover:bg-[#132845] hover:scale-[1.01] active:scale-95 cursor-pointer"
                   )}
                 >
                   {isCalculating ? (
                     <>
-                      <RefreshCw className="w-5 h-5 animate-spin" />
-                      SYNCHRONIZING...
+                      <RefreshCw className="w-4 h-4 animate-spin text-[#C9A84C]" />
+                      <span className="text-[12px] tracking-widest text-[#F5ECD7]">SYNCHRONIZING...</span>
                     </>
                   ) : (
                     <>
                       ANALYZE DESTINY MATRIX
-                      <ChevronRight className="w-5 h-5" />
+                      <ChevronRight className={cn(
+                        "w-5 h-5 transition-transform group-hover:translate-x-1",
+                        (!name.trim() || !dob || isCalculating) ? "text-[#C9A84C]/80" : "text-[#C9A84C]"
+                      )} />
                     </>
                   )}
                 </button>
@@ -216,19 +219,19 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
                     {/* Core Stats Row */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
                        <div className="p-6 bg-white border border-black/5 rounded-2xl text-center">
-                          <span className="text-[9px] font-black text-gold uppercase tracking-widest mb-1 block">Name Total</span>
+                          <span className="text-[9px] font-black text-royal-gold uppercase tracking-widest mb-1 block">Name Total</span>
                           <span className="text-2xl font-display font-black text-premium-charcoal">{results.compound}</span>
                        </div>
                        <div className="p-6 bg-white border border-black/5 rounded-2xl text-center">
-                          <span className="text-[9px] font-black text-gold uppercase tracking-widest mb-1 block">Birth No.</span>
+                          <span className="text-[9px] font-black text-royal-gold uppercase tracking-widest mb-1 block">Birth No.</span>
                           <span className="text-2xl font-display font-black text-premium-charcoal">{results.psychic}</span>
                        </div>
                        <div className="p-6 bg-white border border-black/5 rounded-2xl text-center">
-                          <span className="text-[9px] font-black text-gold uppercase tracking-widest mb-1 block">Destiny No.</span>
+                          <span className="text-[9px] font-black text-royal-gold uppercase tracking-widest mb-1 block">Destiny No.</span>
                           <span className="text-2xl font-display font-black text-premium-charcoal">{results.destiny}</span>
                        </div>
-                       <div className="p-6 bg-gold text-white rounded-2xl text-center shadow-lg shadow-gold/20">
-                          <span className="text-[9px] font-black text-white/60 uppercase tracking-widest mb-1 block">Vibration</span>
+                       <div className="p-6 bg-[#C9A84C]/10 border border-[#C9A84C]/25 rounded-2xl text-center shadow-sm text-premium-charcoal">
+                          <span className="text-[9px] font-black text-royal-gold uppercase tracking-widest mb-1 block">Vibration</span>
                           <span className="text-2xl font-display font-black">{results.single}</span>
                        </div>
                     </div>
@@ -261,7 +264,7 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
 
                     {/* Breakdown Display */}
                     <div className="text-center mb-10">
-                       <span className="text-[10px] font-black text-gold uppercase tracking-widest">Character Vibration Breakdown</span>
+                       <span className="text-[10px] font-black text-royal-gold uppercase tracking-widest">Character Vibration Breakdown</span>
                     </div>
                     <div className="flex flex-wrap justify-center gap-4 mb-16">
                       {results.breakdown.map((item, idx) => (
@@ -273,34 +276,34 @@ export function NameNumerologyCalculator({ onBack }: { onBack?: () => void }) {
                           className="flex flex-col items-center"
                         >
                           <div className="text-2xl font-display font-bold text-premium-charcoal mb-2">{item.char}</div>
-                          <div className="text-[10px] font-black text-gold border border-gold/20 rounded-full w-6 h-6 flex items-center justify-center bg-gold/5">{item.val}</div>
+                          <div className="text-[10px] font-black text-royal-gold border border-royal-gold/20 rounded-full w-6 h-6 flex items-center justify-center bg-royal-gold/5">{item.val}</div>
                         </motion.div>
                       ))}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                       {/* Compound Number Card */}
-                      <div className="p-10 rounded-none bg-white border border-gold/10 shadow-lg relative group overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 blur-3xl -z-10" />
-                        <span className="text-[10px] text-gold tracking-[0.5em] font-black mb-6 block opacity-50">Compound Number</span>
+                      <div className="p-10 rounded-none bg-white border border-royal-gold/20 shadow-lg relative group overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-royal-gold/5 blur-3xl -z-10" />
+                        <span className="text-[10px] text-royal-gold tracking-[0.5em] font-black mb-6 block opacity-70">Compound Number</span>
                         <div className="flex items-end gap-6 mb-8">
                           <h3 className="text-[24pt] font-display font-black text-premium-charcoal leading-none">{results.compound}</h3>
-                          <Binary className="w-8 h-8 text-gold/40 mb-2" />
+                          <Binary className="w-8 h-8 text-royal-gold/40 mb-2" />
                         </div>
-                        <p className="text-[13px] text-text-body/50 leading-relaxed font-light">
+                        <p className="text-[13px] text-text-body/70 leading-relaxed font-light">
                           The compound number reflects the spiritual or hidden forces at play in your name's resonance.
                         </p>
                       </div>
 
                       {/* Single Digit Card */}
-                      <div className="p-10 rounded-none bg-gold shadow-[0_30px_60px_-15px_rgba(99,102,241,0.3)] relative group overflow-hidden border border-white/20">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl -z-10" />
-                        <span className="text-[10px] text-white tracking-[0.5em] font-black mb-6 block opacity-80">Name Number (Single)</span>
+                      <div className="p-10 rounded-none bg-[#C9A84C]/10 border border-[#C9A84C]/25 shadow-lg relative group overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A84C]/5 blur-3xl -z-10" />
+                        <span className="text-[10px] text-royal-gold tracking-[0.5em] font-black mb-6 block opacity-80">Name Number (Single)</span>
                         <div className="flex items-end gap-6 mb-8">
-                          <h3 className="text-[24pt] font-display font-black text-white leading-none">{results.single}</h3>
-                          <Sparkles className="w-8 h-8 text-white/50 mb-2" />
+                          <h3 className="text-[24pt] font-display font-black text-premium-charcoal leading-none">{results.single}</h3>
+                          <Sparkles className="w-8 h-8 text-royal-gold/40 mb-2" />
                         </div>
-                        <p className="text-[13px] text-white/70 leading-relaxed font-light">
+                        <p className="text-[13px] text-text-body/70 leading-relaxed font-light">
                           The single digit represents your primary vibration and how the world perceives your core identity.
                         </p>
                       </div>

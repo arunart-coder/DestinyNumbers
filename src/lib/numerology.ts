@@ -359,20 +359,59 @@ export const calculateLifePathNumber = (dob: string): number => {
 };
 
 export const calculateLoShuGrid = (dob: string, moolank?: number, bhagyank?: number): Record<number, number> => {
-  const digits = dob.replace(/\D/g, '').split('').map(Number);
+  const parts = dob.trim().split(/[/-]|\s\/\s/).filter(Boolean).map(p => p.trim());
+  let day = "";
+  let month = "";
+  let year = "";
+  if (parts.length > 0) {
+    if (parts[0].length === 4) {
+      // YYYY-MM-DD
+      year = parts[0];
+      month = parts[1];
+      day = parts[2];
+    } else {
+      // DD-MM-YYYY
+      day = parts[0];
+      month = parts[1];
+      year = parts[2];
+    }
+  }
+
+  const dayNum = parseInt(day || "0", 10);
+  const skipDay = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30].includes(dayNum);
+
   const grid: Record<number, number> = {};
   
-  // 1. Numbers from DOB
-  digits.forEach(d => { 
-    if (d !== 0) grid[d] = (grid[d] || 0) + 1; 
-  });
+  // 1. Numbers from Day (only if NOT skipped)
+  if (!skipDay && day) {
+    day.split('').forEach(d => {
+      const num = parseInt(d);
+      if (num > 0) grid[num] = (grid[num] || 0) + 1;
+    });
+  }
+
+  // 2. Numbers from Month
+  if (month) {
+    month.split('').forEach(d => {
+      const num = parseInt(d);
+      if (num > 0) grid[num] = (grid[num] || 0) + 1;
+    });
+  }
+
+  // 3. Numbers from Year
+  if (year) {
+    year.split('').forEach(d => {
+      const num = parseInt(d);
+      if (num > 0) grid[num] = (grid[num] || 0) + 1;
+    });
+  }
   
-  // 2. Add Moolank (Psychic Number)
+  // 4. Add Moolank (Psychic Number)
   if (moolank && moolank > 0) {
     grid[moolank] = (grid[moolank] || 0) + 1;
   }
   
-  // 3. Add Bhagyank (Destiny Number)
+  // 5. Add Bhagyank (Destiny Number)
   if (bhagyank && bhagyank > 0) {
     const sB = reduceToSingleDigit(bhagyank, false);
     grid[sB] = (grid[sB] || 0) + 1;
@@ -398,19 +437,26 @@ export const calculateVedicBirthGrid = (dob: string, moolank: number, bhagyank: 
     year = parts[2];
   }
 
+  const dayNum = parseInt(day || "0", 10);
+  const skipDay = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30].includes(dayNum);
+
   const grid: Record<number, number> = {};
   
-  // 1. Numbers from Day
-  day.split('').forEach(d => {
-    const num = parseInt(d);
-    if (num > 0) grid[num] = (grid[num] || 0) + 1;
-  });
+  // 1. Numbers from Day (only if NOT skipped)
+  if (!skipDay && day) {
+    day.split('').forEach(d => {
+      const num = parseInt(d);
+      if (num > 0) grid[num] = (grid[num] || 0) + 1;
+    });
+  }
 
   // 2. Numbers from Month
-  month.split('').forEach(d => {
-    const num = parseInt(d);
-    if (num > 0) grid[num] = (grid[num] || 0) + 1;
-  });
+  if (month) {
+    month.split('').forEach(d => {
+      const num = parseInt(d);
+      if (num > 0) grid[num] = (grid[num] || 0) + 1;
+    });
+  }
 
   // 3. Numbers from Year (century ignored)
   if (year && year.length === 4) {

@@ -196,10 +196,10 @@ export default function CompatibilityCalculator() {
               <div className="absolute top-0 right-0 w-32 h-32 bg-mystic-navy/[0.02] blur-[60px] group-hover:bg-mystic-navy/[0.05] transition-all" />
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-12 h-12 rounded-none bg-mystic-navy/5 flex items-center justify-center border border-[#C9A84C]/20">
-                  <User className="text-mystic-navy w-6 h-6" />
+                  <User className="text-black w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-display font-black text-mystic-navy">Boy Details</h3>
+                  <h3 className="text-xl font-display font-black text-black">Boy Details</h3>
                   <p className="text-[10px] tracking-widest text-[#C9A84C] font-black uppercase">Masculine energy</p>
                 </div>
               </div>
@@ -234,7 +234,7 @@ export default function CompatibilityCalculator() {
                   <Heart className="text-[#C9A84C] w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-display font-black text-mystic-navy">Girl Details</h3>
+                  <h3 className="text-xl font-display font-black text-black">Girl Details</h3>
                   <p className="text-[10px] tracking-widest text-[#C9A84C] font-black uppercase">Feminine energy</p>
                 </div>
               </div>
@@ -262,10 +262,10 @@ export default function CompatibilityCalculator() {
               onClick={calculateCompatibility}
               disabled={!boyName || !girlName || boyDob.length < 14 || girlDob.length < 14 || isCalculating}
               className={cn(
-                "w-full md:flex-1 h-[52px] rounded-none font-display font-black tracking-widest text-[10px] transition-all flex items-center justify-center gap-4 uppercase",
-                boyName && girlName && boyDob.length >= 14 && girlDob.length >= 14 && !isCalculating
-                  ? "bg-mystic-navy text-warm-off-white shadow-2xl hover:scale-[1.01] active:scale-95"
-                  : "bg-mystic-navy/5 text-mystic-navy/20 cursor-not-allowed border border-royal-gold/10"
+                "w-full md:flex-1 h-[56px] rounded-none font-serif font-semibold tracking-[0.2em] text-[14px] transition-all flex items-center justify-center gap-4 uppercase shadow-lg",
+                (!boyName || !girlName || boyDob.length < 14 || girlDob.length < 14 || isCalculating)
+                  ? "bg-mystic-navy text-[#F5ECD7]/80 cursor-not-allowed border border-[#C9A84C]/10"
+                  : "bg-mystic-navy text-[#F5ECD7] hover:bg-[#132845] hover:scale-[1.01] active:scale-95 cursor-pointer"
               )}
             >
               {isCalculating ? (
@@ -274,14 +274,17 @@ export default function CompatibilityCalculator() {
                 </>
               ) : (
                 <>
-                  Decode Compatibility <ChevronRight className="w-4 h-4 text-royal-gold" />
+                  Decode Compatibility <ChevronRight className={cn(
+                    "w-4 h-4 transition-transform",
+                    (!boyName || !girlName || boyDob.length < 14 || girlDob.length < 14 || isCalculating) ? "text-royal-gold/80" : "text-royal-gold"
+                  )} />
                 </>
               )}
             </button>
             
             <button
               onClick={() => { setBoyName(''); setBoyDob(''); setGirlName(''); setGirlDob(''); setResults(null); }}
-              className="w-full md:w-48 h-[52px] rounded-none border border-[#E0D5C0] text-[10px] font-black tracking-widest hover:bg-mystic-navy/5 transition-all text-mystic-navy uppercase"
+              className="w-full md:w-48 h-[52px] rounded-none border border-[#E0D5C0] text-[10px] font-black tracking-widest hover:bg-mystic-navy/5 transition-all text-black uppercase"
             >
               Reset Fields
             </button>
@@ -321,48 +324,48 @@ export default function CompatibilityCalculator() {
                         />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-5xl font-display font-black text-mystic-navy">{results.percentage}%</span>
+                        <span className="text-5xl font-display font-black text-black">{results.percentage}%</span>
                         <span className="text-[10px] tracking-widest text-royal-gold font-black">Harmony</span>
                       </div>
                    </div>
 
                    <div className="text-center">
-                     <h3 className="text-3xl font-display font-black text-mystic-navy mb-2">{results.analysis.title}</h3>
-                     <p className="text-mystic-navy/40 font-sans italic">{results.analysis.message}</p>
+                     <h3 className="text-3xl font-display font-black text-black mb-2">{results.analysis.title}</h3>
+                     <p className="text-black font-semibold font-sans italic">{results.analysis.message}</p>
                    </div>
                 </div>
 
                 {/* Individual Numbers */}
                 <div className="space-y-8 flex flex-col items-center justify-center glass-card bg-white border-royal-gold/10 p-10 rounded-[3rem] shadow-xl overflow-hidden">
-                   <span className="text-[10px] tracking-widest font-black text-mystic-navy/40 mb-4 block">Boy's matrix</span>
+                   <span className="text-[10px] tracking-widest font-black text-black mb-4 block">Boy's matrix</span>
                    <div className="flex justify-center scale-75 md:scale-90 origin-center">
                       <NumerologyMatrix gridData={results.boyLoShu} />
                    </div>
                    <div className="grid grid-cols-2 gap-10 w-full mt-4">
                       <div className="text-center">
-                         <span className="text-2xl font-display font-black text-mystic-navy">{results.boyBirth}</span>
-                         <p className="text-[8px] tracking-widest text-mystic-navy/30 mt-2 font-black uppercase">Birth Number</p>
+                         <span className="text-2xl font-display font-black text-black">{results.boyBirth}</span>
+                         <p className="text-[8px] tracking-widest text-black mt-2 font-black uppercase">Birth Number</p>
                       </div>
                       <div className="text-center">
                          <span className="text-2xl font-display font-black text-royal-gold">{results.boyLifePath}</span>
-                         <p className="text-[8px] tracking-widest text-mystic-navy/30 mt-2 font-black uppercase">Life Path</p>
+                         <p className="text-[8px] tracking-widest text-black mt-2 font-black uppercase">Life Path</p>
                       </div>
                    </div>
                 </div>
 
                 <div className="space-y-8 flex flex-col items-center justify-center glass-card bg-white border-royal-gold/10 p-10 rounded-[3rem] shadow-xl overflow-hidden">
-                   <span className="text-[10px] tracking-widest font-black text-royal-gold/40 mb-4 block">Girl's matrix</span>
+                   <span className="text-[10px] tracking-widest font-black text-black mb-4 block">Girl's matrix</span>
                    <div className="flex justify-center scale-75 md:scale-90 origin-center">
                       <NumerologyMatrix gridData={results.girlLoShu} />
                    </div>
                    <div className="grid grid-cols-2 gap-10 w-full mt-4">
                       <div className="text-center">
-                         <span className="text-2xl font-display font-black text-mystic-navy">{results.girlBirth}</span>
-                         <p className="text-[8px] tracking-widest text-mystic-navy/30 mt-2 font-black uppercase">Birth Number</p>
+                         <span className="text-2xl font-display font-black text-black">{results.girlBirth}</span>
+                         <p className="text-[8px] tracking-widest text-black mt-2 font-black uppercase">Birth Number</p>
                       </div>
                       <div className="text-center">
                          <span className="text-2xl font-display font-black text-royal-gold">{results.girlLifePath}</span>
-                         <p className="text-[8px] tracking-widest text-mystic-navy/30 mt-2 font-black uppercase">Life Path</p>
+                         <p className="text-[8px] tracking-widest text-black mt-2 font-black uppercase">Life Path</p>
                       </div>
                    </div>
                 </div>
@@ -371,7 +374,7 @@ export default function CompatibilityCalculator() {
               {/* SECTION 4: Detailed Breakdown */}
               <div className="glass-card bg-white border-royal-gold/10 rounded-[3.5rem] overflow-hidden shadow-xl">
                 <div className="p-10 border-b border-royal-gold/10 bg-mystic-navy/5">
-                   <h3 className="text-2xl font-display font-black text-mystic-navy flex items-center gap-4">
+                   <h3 className="text-2xl font-display font-black text-black flex items-center gap-4">
                      <Sparkles className="text-royal-gold w-6 h-6" /> Detailed comparison matrix
                    </h3>
                 </div>
@@ -386,12 +389,12 @@ export default function CompatibilityCalculator() {
                     >
                       <div className="flex items-center gap-8">
                          <div className="flex items-center -space-x-4">
-                            <div className="w-14 h-14 rounded-full border-2 border-royal-gold/20 bg-white shadow-lg flex items-center justify-center font-display font-black text-mystic-navy text-xl z-20">{comp.num1}</div>
+                            <div className="w-14 h-14 rounded-full border-2 border-royal-gold/20 bg-white shadow-lg flex items-center justify-center font-display font-black text-black text-xl z-20">{comp.num1}</div>
                             <div className="w-14 h-14 rounded-full border-2 border-royal-gold/20 bg-white shadow-lg flex items-center justify-center font-display font-black text-royal-gold text-xl z-10">{comp.num2}</div>
                          </div>
                          <div>
-                            <h4 className="text-mystic-navy font-display font-black text-lg">{comp.label}</h4>
-                            <p className="text-[10px] tracking-widest text-mystic-navy/20 font-black">Sync intersection {idx + 1}</p>
+                            <h4 className="text-black font-display font-black text-lg">{comp.label}</h4>
+                            <p className="text-[10px] tracking-widest text-black font-black">Sync intersection {idx + 1}</p>
                          </div>
                       </div>
 
@@ -408,7 +411,7 @@ export default function CompatibilityCalculator() {
                          </div>
                          <div className="w-32 text-right">
                             <span className="text-3xl font-display font-black text-royal-gold">+{comp.score}</span>
-                            <p className="text-[8px] tracking-widest text-mystic-navy/20 font-black">Points</p>
+                            <p className="text-[8px] tracking-widest text-black font-black">Points</p>
                          </div>
                       </div>
                     </motion.div>

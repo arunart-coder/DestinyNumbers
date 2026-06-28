@@ -78,21 +78,24 @@ export function NumerologyCalculator() {
             onClick={calculateNumerology}
             disabled={dob.length < 10 || isCalculating}
             className={cn(
-              "w-full py-6 rounded-none font-display font-bold tracking-[0.3em] text-[11px] transition-all flex items-center justify-center gap-3",
-              dob.length === 10 && !isCalculating
-                ? "bg-gold text-white shadow-[0_0_50px_rgba(99,102,241,0.3)] hover:scale-[1.02] active:scale-95"
-                : "bg-black/5 text-black/20 border border-black/5 cursor-not-allowed"
+              "w-full h-[56px] rounded-none font-serif font-semibold tracking-[0.2em] text-[14px] transition-all flex items-center justify-center gap-3 shadow-lg",
+              (dob.length < 10 || isCalculating)
+                ? "bg-mystic-navy text-[#F5ECD7]/80 cursor-not-allowed border border-[#C9A84C]/10"
+                : "bg-mystic-navy text-[#F5ECD7] hover:bg-[#132845] hover:scale-[1.01] active:scale-95 cursor-pointer"
             )}
           >
             {isCalculating ? (
               <>
-                <RefreshCw className="w-5 h-5 animate-spin" />
+                <RefreshCw className="w-5 h-5 animate-spin text-[#C9A84C]" />
                 Decoding Matrix...
               </>
             ) : (
               <>
                 Execute Matrix Analysis
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className={cn(
+                  "w-5 h-5 transition-transform group-hover:translate-x-1",
+                  (dob.length < 10 || isCalculating) ? "text-[#C9A84C]/80" : "text-[#C9A84C]"
+                )} />
               </>
             )}
           </button>

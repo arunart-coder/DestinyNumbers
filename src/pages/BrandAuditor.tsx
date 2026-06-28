@@ -576,9 +576,17 @@ export default function BrandAuditor() {
                   <button
                     onClick={nextStep}
                     disabled={step === 0 && (!data.brandName || !data.founderName || data.launchDate.length < 10)}
-                    className="flex items-center gap-3 px-8 h-[52px] bg-mystic-navy text-warm-off-white rounded-[6px] font-black tracking-widest text-[11px] hover:shadow-xl transition-all disabled:opacity-50 group uppercase"
+                    className={cn(
+                      "flex items-center gap-3 px-8 h-[56px] rounded-none font-serif font-semibold tracking-[0.2em] text-[14px] transition-all group uppercase shadow-lg",
+                      (step === 0 && (!data.brandName || !data.founderName || data.launchDate.length < 10))
+                        ? "bg-mystic-navy text-[#F5ECD7]/80 cursor-not-allowed border border-[#C9A84C]/10"
+                        : "bg-mystic-navy text-[#F5ECD7] hover:bg-[#132845] hover:scale-[1.01] active:scale-95 cursor-pointer"
+                    )}
                   >
-                    {step === STEPS.length - 1 ? 'Analyze Brand Matrix' : 'Proceed Further'} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-royal-gold" />
+                    {step === STEPS.length - 1 ? 'Analyze Brand Matrix' : 'Proceed Further'} <ArrowRight className={cn(
+                      "w-4 h-4 transition-transform group-hover:translate-x-2",
+                      (step === 0 && (!data.brandName || !data.founderName || data.launchDate.length < 10)) ? "text-royal-gold/80" : "text-royal-gold"
+                    )} />
                   </button>
                 </div>
               </motion.div>

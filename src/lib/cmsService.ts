@@ -247,7 +247,9 @@ export const cmsService = {
   saveData: async (data: CMSData): Promise<void> => {
     try {
       const docRef = doc(db, CMS_DOC_PATH);
-      await setDoc(docRef, data);
+      // Automatically compress all embedded base64 images before saving to Firestore to fit under 1MB limit
+      const compressedData = await compressCMSImages(data);
+      await setDoc(docRef, compressedData);
       window.dispatchEvent(new Event('cms-update'));
     } catch (e) {
       handleFirestoreError(e, OperationType.WRITE, CMS_DOC_PATH);
@@ -257,10 +259,101 @@ export const cmsService = {
   uploadImage: (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onload = async (e) => {
+        const originalBase64 = e.target?.result as string;
+        try {
+          const compressed = await compressBase64Image(originalBase64);
+          resolve(compressed);
+        } catch (err) {
+          console.warn("Base64 compression failed, using original:", err);
+          resolve(originalBase64);
+        }
+      };
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   }
+};
+
+export const compressBase64Image = (base64Str: string): Promise<string> => {
+  if (!base64Str || typeof window === 'undefined' || !base64Str.startsWith('data:image')) {
+    return Promise.resolve(base64Str);
+  }
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const maxDim = 1000;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(base64Str);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        // Compress as JPEG with 0.7 quality
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        resolve(dataUrl);
+      } catch (err) {
+        console.error("Canvas compression helper failed:", err);
+        resolve(base64Str);
+      }
+    };
+    img.onerror = () => {
+      resolve(base64Str);
+    };
+    img.src = base64Str;
+  });
+};
+
+export const compressCMSImages = async (data: CMSData): Promise<CMSData> => {
+  const cloned = JSON.parse(JSON.stringify(data)) as CMSData;
+  
+  if (cloned.hero && cloned.hero.image) {
+    cloned.hero.image = await compressBase64Image(cloned.hero.image);
+  }
+  
+  if (cloned.bio && cloned.bio.image) {
+    cloned.bio.image = await compressBase64Image(cloned.bio.image);
+  }
+  
+  if (Array.isArray(cloned.slides)) {
+    for (const slide of cloned.slides) {
+      if (slide.image) {
+        slide.image = await compressBase64Image(slide.image);
+      }
+    }
+  }
+  
+  if (Array.isArray(cloned.services)) {
+    for (const service of cloned.services) {
+      if (service.image) {
+        service.image = await compressBase64Image(service.image);
+      }
+    }
+  }
+  
+  if (Array.isArray(cloned.testimonials)) {
+    for (const testimonial of cloned.testimonials) {
+      if (testimonial.image) {
+        testimonial.image = await compressBase64Image(testimonial.image);
+      }
+    }
+  }
+  
+  return cloned;
 };
 

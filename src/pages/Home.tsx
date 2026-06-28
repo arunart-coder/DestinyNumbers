@@ -357,7 +357,7 @@ export default function Home() {
                   Dr. Arun Poovaiah has helped thousands of individuals and global brands 
                   align their physical reality with their cosmic blueprint.
                 </p>
-                <p>
+                <p className="text-lg">
                   His methodology is strictly analytical, focusing on the degree-based positioning 
                   of planetary nodes and the numerical frequency of identity signals.
                 </p>
