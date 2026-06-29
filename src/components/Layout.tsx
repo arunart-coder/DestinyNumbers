@@ -731,7 +731,7 @@ export function Footer() {
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/40 text-xs text-center md:text-left">
-            © {new Date().getFullYear()} Destiny Numbers. Dr. Arun Poovaiah. All rights reserved.
+            © {new Date().getFullYear()} Destiny Numbers. All rights reserved.
           </p>
           <div className="flex gap-8 text-xs text-white/40">
             <Link to="/privacy" className="hover:text-warm-accent">Privacy Policy</Link>
